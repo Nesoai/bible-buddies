@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Bible Buddies — God's big bookshelf</title>
+<title>Bible Buddies — Yah's big bookshelf</title>
 <meta name="description" content="Bible Buddies: a narrated tap-and-learn Bible game for ages 2–6. Explore 89 books, heroes, lessons, counting, and story time — read out loud.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +33,7 @@ body{
   font-family:'Fredoka',sans-serif;
   font-size:20px;
   color:var(--moonmilk);
-  background:linear-gradient(180deg,#2f7fc4 0%,#54a4e3 34%,#9fd4ff 66%,#ffe9b8 100%);
+  background:linear-gradient(180deg,#2f7fc4 0%,#54a4e3 32%,#9fd4ff 60%,#d8f3c4 100%);
   overflow:hidden;
   position:fixed; inset:0;
   touch-action:manipulation;
@@ -45,8 +45,8 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
 #sky{position:fixed;inset:0;pointer-events:none;z-index:0}
 .tw{position:absolute;border-radius:50%;background:#fff8dd;opacity:.7;animation:twinkle 4s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.9;transform:scale(1.15)}}
-#hill{position:fixed;left:-10%;right:-10%;bottom:-6vh;height:26vh;background:radial-gradient(120% 100% at 50% 0,#e3c07f 0,#cfa55d 60%,#b98d47 100%);border-radius:50% 50% 0 0;z-index:0;pointer-events:none}
-#hill:after{content:"🌾 🐑 🌿 🕊️ 🌾 🐪 🫒 🌾";position:absolute;top:14px;left:0;right:0;text-align:center;font-size:clamp(18px,4vw,30px);letter-spacing:2vw;filter:saturate(1.1)}
+#hill{position:fixed;left:-10%;right:-10%;bottom:-6vh;height:26vh;background:radial-gradient(120% 100% at 50% 0,#79ce7f 0,#4fae63 60%,#3b8f4f 100%);border-radius:50% 50% 0 0;z-index:0;pointer-events:none}
+#hill:after{content:"🌳 🌷 🦋 🕊️ 🌸 🐑 🌼 🌿";position:absolute;top:14px;left:0;right:0;text-align:center;font-size:clamp(18px,4vw,30px);letter-spacing:2vw;filter:saturate(1.1)}
 #sun{position:fixed;top:4vh;right:6vw;width:min(16vw,110px);height:min(16vw,110px);border-radius:50%;background:radial-gradient(circle,#fff3c4 0%,#ffd76b 55%,rgba(255,215,107,0) 72%);box-shadow:0 0 60px 24px rgba(255,223,142,.55);z-index:0;pointer-events:none}
 .cloud{position:absolute;font-size:clamp(30px,6vw,54px);opacity:.9;animation:drift2 26s linear infinite}
 @keyframes drift2{from{transform:translateX(-15vw)}to{transform:translateX(115vw)}}
@@ -223,10 +223,10 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
 <section class="screen on" id="scr-splash">
   <div id="splashInner">
     <h1>Bible Buddies</h1>
-    <p class="sub">God’s giant bookshelf — 89 books of stories &amp; songs 📚</p>
+    <p class="sub">Yah’s giant bookshelf — 89 books of stories &amp; songs 📚</p>
     <div class="splash-kid" id="splashKid"></div>
     <button class="big-btn gold" id="btnStart">▶ &nbsp;Tap to play!</button>
-    <p class="footnote" style="margin-top:4px">Made with love by Boundless · sound on 🔊 · v1.0</p>
+    <p class="footnote" style="margin-top:4px">Made with love by Boundless · sound on 🔊 · v1.1</p>
   </div>
 </section>
 
@@ -302,6 +302,7 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
     <p><b>Bible Buddies</b> is a narrated tap-and-learn Bible game for ages 2–6: a tappable bookshelf of 89 books (each with a one-line summary, a hero, and a lesson), counting games, hero and which-book quizzes, heart-lesson matching, and 8 read-aloud stories with bouncing words. Every prompt is read out loud, so pre-readers can play on their own.</p>
     <p><b>Progress</b> saves on this device automatically — each child picks their animal and picks up where they left off. Levels adjust up and down on their own as your child answers.</p>
     <p><b>About the 89 books:</b> this shelf merges the Hebrew Bible (Tanakh), the Apocrypha / Deuterocanonical books, and the Ethiopian Orthodox Tewahedo broader canon — traditionally counted as 81 books, the largest Bible canon in the world. Counting every named book separately (traditions group some together), the merged shelf holds 89. Summaries are simplified and kept gentle for little ones.</p>
+    <p><b>Sacred &amp; Hebrew names:</b> the game says <b>Yah</b> and <b>Yeshua (HaMashiach)</b>, and uses Hebrew names for people — Moshe, Noach, Dovid, Ester, Yonah, Yehudit, Chanoch… As children advance, the English names are taught alongside: at level 3 in Bible Heroes the cards show both (Moshe · Moses), and the bookshelf read-alouds add "in English, Moses." Book titles stay in English so pairs like Yonah-in-the-book-of-Jonah teach the connection naturally.</p>
     <div class="setrow">🔊 Read everything out loud <button class="toggle on" id="tgVoice"></button></div>
     <div class="setrow">🎤 Voice commands (say "home", "again", or an answer) <button class="toggle" id="tgMic"></button></div>
     <div class="setrow">✨ Extra sparkles &amp; motion <button class="toggle on" id="tgFx"></button></div>
@@ -328,101 +329,101 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
 const AVATARS=['🐰','🦊','🐻','🐸','🦄','🐯','🐧','🐙'];
 const SHELVES=[
  {name:'Law shelf',emoji:'📜',hex:'#d95757',dark:'#a33232',books:[
-  ['Genesis','🌍','God makes the whole world, and every animal and person.','Adam & Eve','God made everything, and it is good.'],
-  ['Exodus','🌊','Moses leads God\u2019s people out of Egypt — the sea opens up!','Moses','God makes a way.'],
-  ['Leviticus','🕊️','Special rules that teach the people to live clean and kind.','Moses','Living God\u2019s way is good for us.'],
-  ['Numbers','🏕️','God\u2019s people camp and march through the big desert.','Moses','God stays with us on long journeys.'],
-  ['Deuteronomy','❤️','Moses says: remember God\u2019s rules and love Him with all your heart.','Moses','Love God with all your heart.']]},
+  ['Genesis','🌍','Yah makes the whole world, and every animal and person.','Adam & Chavah','Yah made everything, and it is good.'],
+  ['Exodus','🌊','Moshe leads Yah\u2019s people out of Egypt — the sea opens up!','Moshe','Yah makes a way.'],
+  ['Leviticus','🕊️','Special rules that teach the people to live clean and kind.','Moshe','Living Yah\u2019s way is good for us.'],
+  ['Numbers','🏕️','Yah\u2019s people camp and march through the big desert.','Moshe','Yah stays with us on long journeys.'],
+  ['Deuteronomy','❤️','Moshe says: remember Yah\u2019s rules and love Him with all your heart.','Moshe','Love Yah with all your heart.']]},
  {name:'Story shelf',emoji:'🏰',hex:'#e67e22',dark:'#b05e12',books:[
-  ['Joshua','🎺','Trumpets blow and the big walls of Jericho fall down!','Joshua','Be brave — God is with you.'],
-  ['Judges','💪','Strong Samson and brave Deborah rescue God\u2019s people.','Samson & Deborah','God sends helpers.'],
-  ['Ruth','🌾','Ruth stays with Naomi and finds a brand-new family.','Ruth','Kindness makes a family.'],
-  ['1 Samuel','🎯','Little David trusts God and beats the giant Goliath.','David','With God, small can be mighty.'],
-  ['2 Samuel','👑','David becomes king and sings songs to God.','David','Say sorry when you make mistakes.'],
-  ['1 Kings','🏛️','Wise King Solomon builds a beautiful temple for God.','Solomon','Ask God for wisdom.'],
-  ['2 Kings','🔥','Elijah and Elisha do amazing things with God\u2019s help.','Elisha','God can do anything.'],
-  ['1 Chronicles','📖','The long, long story of God\u2019s big family, told again.','David','Every person matters to God.'],
-  ['2 Chronicles','🏰','Kings who follow God do well — kings who don\u2019t get in trouble.','Solomon','Following God is the best way.'],
-  ['Ezra','🧱','The people come home and build God\u2019s house again.','Ezra','It\u2019s never too late to start again.'],
-  ['Nehemiah','🧗','Nehemiah builds the city wall and everybody helps.','Nehemiah','Big jobs need teamwork.'],
-  ['Esther','👸','Brave Queen Esther speaks up and saves her people.','Esther','Be brave and speak up.']]},
+  ['Joshua','🎺','Trumpets blow and the big walls of Jericho fall down!','Yehoshua','Be brave — Yah is with you.'],
+  ['Judges','💪🏾','Strong Shimshon and brave Devorah rescue Yah\u2019s people.','Shimshon & Devorah','Yah sends helpers.'],
+  ['Ruth','🌾','Rut stays with Naomi and finds a brand-new family.','Rut','Kindness makes a family.'],
+  ['1 Samuel','🎯','Little Dovid trusts Yah and beats the giant Golyat.','Dovid','With Yah, small can be mighty.'],
+  ['2 Samuel','👑','Dovid becomes king and sings songs to Yah.','Dovid','Say sorry when you make mistakes.'],
+  ['1 Kings','🏛️','Wise King Shlomo builds a beautiful temple for Yah.','Shlomo','Ask Yah for wisdom.'],
+  ['2 Kings','🔥','Eliyahu and Elisha do amazing things with Yah\u2019s help.','Elisha','Yah can do anything.'],
+  ['1 Chronicles','📖','The long, long story of Yah\u2019s big family, told again.','Dovid','Every person matters to Yah.'],
+  ['2 Chronicles','🏰','Kings who follow Yah do well — kings who don\u2019t get in trouble.','Shlomo','Following Yah is the best way.'],
+  ['Ezra','🧱','The people come home and build Yah\u2019s house again.','Ezra','It\u2019s never too late to start again.'],
+  ['Nehemiah','🧗🏾','Nechemyah builds the city wall and everybody helps.','Nechemyah','Big jobs need teamwork.'],
+  ['Esther','👸🏾','Brave Queen Ester speaks up and saves her people.','Ester','Be brave and speak up.']]},
  {name:'Treasure shelf',emoji:'💎',hex:'#8e44ad',dark:'#683080',books:[
-  ['Tobit','🐟','Tobias travels with an angel and a happy dog — and a big fish!','Tobias & Raphael','God sends angels to help us.'],
-  ['Judith','⭐','Brave Judith saves her whole town with courage and prayer.','Judith','One brave person can save many.'],
-  ['1 Maccabees','🕎','A brave family protects God\u2019s temple, and the lamps shine again.','Judah Maccabee','Stand up for what is right.'],
-  ['2 Maccabees','🛡️','More stories of the brave Maccabee family trusting God.','Judah Maccabee','Never give up on what is right.'],
-  ['1 Meqabyan','🦁','An Ethiopian book about heroes who stay true to God.','The Meqabyan heroes','Stay true to God.'],
-  ['2 Meqabyan','🌅','More Ethiopian hero stories about turning back to God.','The Meqabyan heroes','God forgives when we turn back.'],
-  ['3 Meqabyan','☀️','Ethiopian songs and stories about how God helps the faithful.','The faithful','God helps those who trust Him.'],
-  ['Jubilees','🗓️','The world\u2019s story told in special sevens — God loves rest days.','Moses','Rest days are a gift.'],
-  ['Ezra Sutuel','🌠','Ezra asks God big questions and sees amazing dreams.','Ezra','It\u2019s okay to ask God big questions.']]},
+  ['Tobit','🐟','Toviyah travels with an angel and a happy dog — and a big fish!','Toviyah & Refael','Yah sends angels to help us.'],
+  ['Judith','⭐','Brave Yehudit saves her whole town with courage and prayer.','Yehudit','One brave person can save many.'],
+  ['1 Maccabees','🕎','A brave family protects Yah\u2019s temple, and the lamps shine again.','Yehudah HaMakabi','Stand up for what is right.'],
+  ['2 Maccabees','🛡️','More stories of the brave Maccabee family trusting Yah.','Yehudah HaMakabi','Never give up on what is right.'],
+  ['1 Meqabyan','🦁','An Ethiopian book about heroes who stay true to Yah.','The Meqabyan heroes','Stay true to Yah.'],
+  ['2 Meqabyan','🌅','More Ethiopian hero stories about turning back to Yah.','The Meqabyan heroes','Yah forgives when we turn back.'],
+  ['3 Meqabyan','☀️','Ethiopian songs and stories about how Yah helps the faithful.','The faithful','Yah helps those who trust Him.'],
+  ['Jubilees','🗓️','The world\u2019s story told in special sevens — Yah loves rest days.','Moshe','Rest days are a gift.'],
+  ['Ezra Sutuel','🌠','Ezra asks Yah big questions and sees amazing dreams.','Ezra','It\u2019s okay to ask Yah big questions.']]},
  {name:'Songs & Wisdom',emoji:'🎵',hex:'#e2568f',dark:'#b03a6b',books:[
-  ['Job','🌪️','Job loses everything but never stops talking to God.','Job','God is with us even on sad days.'],
-  ['Psalms','🎶','One hundred fifty songs to sing to God — happy ones and sad ones.','David','You can tell God anything.'],
-  ['Proverbs','🦉','Little sayings that make you wise.','Solomon','Wise words help us choose well.'],
-  ['Ecclesiastes','⏳','A wise teacher learns what really matters most.','The Teacher','Loving God matters most.'],
-  ['Song of Songs','🌹','A beautiful poem all about love.','Solomon','Love is beautiful.'],
-  ['Wisdom of Solomon','💡','Wisdom shines like a bright, friendly light.','Solomon','Choose wisdom.'],
+  ['Job','🌪️','Iyov loses everything but never stops talking to Yah.','Iyov','Yah is with us even on sad days.'],
+  ['Psalms','🎶','One hundred fifty songs to sing to Yah — happy ones and sad ones.','Dovid','You can tell Yah anything.'],
+  ['Proverbs','🦉','Little sayings that make you wise.','Shlomo','Wise words help us choose well.'],
+  ['Ecclesiastes','⏳','A wise teacher learns what really matters most.','The Teacher','Loving Yah matters most.'],
+  ['Song of Songs','🌹','A beautiful poem all about love.','Shlomo','Love is beautiful.'],
+  ['Wisdom of Solomon','💡','Wisdom shines like a bright, friendly light.','Shlomo','Choose wisdom.'],
   ['Sirach','🍯','A grandpa\u2019s book of good advice for every single day.','Ben Sira','Good advice is sweet like honey.'],
-  ['Prayer of Manasseh','🙏','A king says a great big sorry to God — and God forgives him.','King Manasseh','Saying sorry makes things right.']]},
+  ['Prayer of Manasseh','🙏🏾','A king says a great big sorry to Yah — and Yah forgives him.','King Menasheh','Saying sorry makes things right.']]},
  {name:'Big Prophets',emoji:'🔥',hex:'#16a085',dark:'#0e7562',books:[
-  ['Isaiah','🕊️','A prophet promises a Prince of Peace is coming.','Isaiah','God keeps His promises.'],
-  ['Jeremiah','😢','Jeremiah cries for the people but never stops hoping.','Jeremiah','God gives new hope.'],
-  ['Lamentations','🌧️','Sad songs after the city falls — but morning brings new mercy.','Jeremiah','God\u2019s love is new every morning.'],
-  ['Baruch','📜','Jeremiah\u2019s helper writes letters full of hope.','Baruch','Hope travels far.'],
+  ['Isaiah','🕊️','A prophet promises a Prince of Peace is coming.','Yeshayahu','Yah keeps His promises.'],
+  ['Jeremiah','😢','Yirmeyahu cries for the people but never stops hoping.','Yirmeyahu','Yah gives new hope.'],
+  ['Lamentations','🌧️','Sad songs after the city falls — but morning brings new mercy.','Yirmeyahu','Yah\u2019s love is new every morning.'],
+  ['Baruch','📜','Yirmeyahu\u2019s helper writes letters full of hope.','Baruch','Hope travels far.'],
   ['4 Baruch','🦅','An eagle carries a letter of hope all the way home.','Baruch','Good news is worth waiting for.'],
-  ['Ezekiel','🌈','Ezekiel sees amazing pictures from God — even dry bones dance!','Ezekiel','God can make anything new.'],
-  ['Daniel','🦁','Daniel prays every day — even in the lions\u2019 den, God keeps him safe.','Daniel','Keep praying; God protects.'],
-  ['Enoch','🚶','Enoch walks so close with God that God takes him up to the sky.','Enoch','Walk close with God.']]},
+  ['Ezekiel','🌈','Yechezkel sees amazing pictures from Yah — even dry bones dance!','Yechezkel','Yah can make anything new.'],
+  ['Daniel','🦁','Daniel prays every day — even in the lions\u2019 den, Yah keeps him safe.','Daniel','Keep praying; Yah protects.'],
+  ['Enoch','🚶🏾','Chanoch walks so close with Yah that Yah takes him up to the sky.','Chanoch','Walk close with Yah.']]},
  {name:'Twelve Little Prophets',emoji:'🌟',hex:'#27ae60',dark:'#1d8347',books:[
-  ['Hosea','💗','God keeps loving His people, no matter what.','Hosea','God never stops loving.'],
-  ['Joel','🦗','After the hungry bugs, God promises to make everything better.','Joel','God makes things new.'],
+  ['Hosea','💗','Yah keeps loving His people, no matter what.','Hoshea','Yah never stops loving.'],
+  ['Joel','🦗','After the hungry bugs, Yah promises to make everything better.','Yoel','Yah makes things new.'],
   ['Amos','⚖️','Be fair to everyone, says the shepherd prophet.','Amos','Fairness matters.'],
-  ['Obadiah','🏔️','The shortest prophet book: don\u2019t be mean when others fall down.','Obadiah','Don\u2019t laugh at others\u2019 troubles.'],
-  ['Jonah','🐋','Jonah runs away, a big fish swallows him, and he learns to obey.','Jonah','You can\u2019t run from God\u2019s love.'],
-  ['Micah','✨','Do what is right, love kindness, and walk humbly with God.','Micah','Be fair, kind, and humble.'],
-  ['Nahum','🌊','God is strong and keeps His people safe.','Nahum','God protects.'],
-  ['Habakkuk','🌄','Habakkuk asks God why — and learns to trust and sing.','Habakkuk','Trust God, even with big questions.'],
-  ['Zephaniah','🎉','God sings happy songs over His children!','Zephaniah','God delights in you.'],
-  ['Haggai','🔨','Time to build God\u2019s house — first things first!','Haggai','Put God first.'],
-  ['Zechariah','🐴','A gentle king will come riding on a little donkey.','Zechariah','God\u2019s king is gentle.'],
-  ['Malachi','📮','God\u2019s last letter before a long quiet time — get ready!','Malachi','Get your heart ready.']]},
- {name:'Jesus shelf',emoji:'⭐',hex:'#2f6fd6',dark:'#1e4c99',books:[
-  ['Matthew','👑','Jesus is born — the promised King! Wise men follow the star.','Jesus','Jesus is the promised King.'],
-  ['Mark','🏃','Quick! Jesus helps people everywhere he goes.','Jesus','Jesus came to help.'],
-  ['Luke','💗','Jesus loves everyone — especially people others forget.','Jesus','Everyone matters to Jesus.'],
-  ['John','✨','Jesus is God\u2019s light and love for the whole world.','Jesus','God so loved the world.'],
-  ['Acts','🔥','Jesus\u2019 friends tell the good news everywhere!','Peter & Paul','Share good news.']]},
+  ['Obadiah','🏔️','The shortest prophet book: don\u2019t be mean when others fall down.','Ovadyah','Don\u2019t laugh at others\u2019 troubles.'],
+  ['Jonah','🐋','Yonah runs away, a big fish swallows him, and he learns to obey.','Yonah','You can\u2019t run from Yah\u2019s love.'],
+  ['Micah','✨','Do what is right, love kindness, and walk humbly with Yah.','Michah','Be fair, kind, and humble.'],
+  ['Nahum','🌊','Yah is strong and keeps His people safe.','Nachum','Yah protects.'],
+  ['Habakkuk','🌄','Chavakuk asks Yah why — and learns to trust and sing.','Chavakuk','Trust Yah, even with big questions.'],
+  ['Zephaniah','🎉','Yah sings happy songs over His children!','Tzefanyah','Yah delights in you.'],
+  ['Haggai','🔨','Time to build Yah\u2019s house — first things first!','Chaggai','Put Yah first.'],
+  ['Zechariah','🐴','A gentle king will come riding on a little donkey.','Zecharyah','Yah\u2019s king is gentle.'],
+  ['Malachi','📮','Yah\u2019s last letter before a long quiet time — get ready!','Malachi','Get your heart ready.']]},
+ {name:'Yeshua shelf',emoji:'⭐',hex:'#2f6fd6',dark:'#1e4c99',books:[
+  ['Matthew','👑','Yeshua is born — the promised King! Wise men follow the star.','Yeshua','Yeshua is the promised King.'],
+  ['Mark','🏃🏾','Quick! Yeshua helps people everywhere he goes.','Yeshua','Yeshua came to help.'],
+  ['Luke','💗','Yeshua loves everyone — especially people others forget.','Yeshua','Everyone matters to Yeshua.'],
+  ['John','✨','Yeshua is Yah\u2019s light and love for the whole world.','Yeshua','Yah so loved the world.'],
+  ['Acts','🔥','Yeshua\u2019s friends tell the good news everywhere!','Kefa & Sha\u2019ul','Share good news.']]},
  {name:'Letters shelf',emoji:'✉️',hex:'#5d6db5',dark:'#414e8c',books:[
-  ['Romans','💌','Paul writes: God\u2019s love is a free gift.','Paul','God\u2019s love is a gift.'],
-  ['1 Corinthians','💞','Love is patient, love is kind.','Paul','Love is the greatest.'],
-  ['2 Corinthians','🌱','God makes us strong when we feel weak.','Paul','God\u2019s power helps weak people.'],
-  ['Galatians','🕊️','God\u2019s children are free to love.','Paul','Love makes us free.'],
-  ['Ephesians','🛡️','Put on God\u2019s armor of love and truth.','Paul','God makes us one family.'],
-  ['Philippians','😊','Be joyful always — Paul sings even in jail!','Paul','Choose joy.'],
-  ['Colossians','🌞','Jesus is first in everything.','Paul','Keep Jesus first.'],
-  ['1 Thessalonians','⏰','Live ready and keep loving each other.','Paul','Keep loving, be ready.'],
-  ['2 Thessalonians','💪','Don\u2019t get tired of doing good.','Paul','Keep doing good.'],
-  ['1 Timothy','🧭','Paul teaches young Timothy how to lead with love.','Timothy','You\u2019re never too young to do good.'],
-  ['2 Timothy','🏅','Finish the race! Keep the faith.','Paul','Never give up.'],
-  ['Titus','🤝','Do good things that help everyone.','Titus','Good deeds shine.'],
-  ['Philemon','🤗','A little letter about forgiving and welcoming a friend.','Onesimus','Forgive and welcome.'],
-  ['Hebrews','⛰️','Jesus is the best — keep trusting Him.','The faithful','Faith keeps us going.'],
-  ['James','🍎','Don\u2019t just hear good words — do them!','James','Kind doing beats just saying.'],
-  ['1 Peter','💎','Be brave when things are hard; God cares for you.','Peter','Give God your worries.'],
-  ['2 Peter','🌅','Remember what is true and keep growing good.','Peter','Grow in goodness.'],
-  ['1 John','💕','Love one another, because God is love.','John','God is love.'],
-  ['2 John','🚪','Walk in truth and love.','John','Truth and love go together.'],
-  ['3 John','🏠','Be kind to visitors and helpers.','John','Welcome others.'],
-  ['Jude','⚓','Hold tight to what is true.','Jude','Hold on to truth.'],
-  ['Revelation','🌈','John\u2019s big dream: one day God makes everything new — no more tears!','John','God wins; all things will be made new.']]},
+  ['Romans','💌','Sha\u2019ul writes: Yah\u2019s love is a free gift.','Sha\u2019ul','Yah\u2019s love is a gift.'],
+  ['1 Corinthians','💞','Love is patient, love is kind.','Sha\u2019ul','Love is the greatest.'],
+  ['2 Corinthians','🌱','Yah makes us strong when we feel weak.','Sha\u2019ul','Yah\u2019s power helps weak people.'],
+  ['Galatians','🕊️','Yah\u2019s children are free to love.','Sha\u2019ul','Love makes us free.'],
+  ['Ephesians','🛡️','Put on Yah\u2019s armor of love and truth.','Sha\u2019ul','Yah makes us one family.'],
+  ['Philippians','😊','Be joyful always — Sha\u2019ul sings even in jail!','Sha\u2019ul','Choose joy.'],
+  ['Colossians','🌞','Yeshua is first in everything.','Sha\u2019ul','Keep Yeshua first.'],
+  ['1 Thessalonians','⏰','Live ready and keep loving each other.','Sha\u2019ul','Keep loving, be ready.'],
+  ['2 Thessalonians','💪🏾','Don\u2019t get tired of doing good.','Sha\u2019ul','Keep doing good.'],
+  ['1 Timothy','🧭','Sha\u2019ul teaches young Timotiyos how to lead with love.','Timotiyos','You\u2019re never too young to do good.'],
+  ['2 Timothy','🏅','Finish the race! Keep the faith.','Sha\u2019ul','Never give up.'],
+  ['Titus','🤝','Do good things that help everyone.','Titos','Good deeds shine.'],
+  ['Philemon','🤗','A little letter about forgiving and welcoming a friend.','Onesimos','Forgive and welcome.'],
+  ['Hebrews','⛰️','Yeshua is the best — keep trusting Him.','The faithful','Faith keeps us going.'],
+  ['James','🍎','Don\u2019t just hear good words — do them!','Ya\u2019akov','Kind doing beats just saying.'],
+  ['1 Peter','💎','Be brave when things are hard; Yah cares for you.','Kefa','Give Yah your worries.'],
+  ['2 Peter','🌅','Remember what is true and keep growing good.','Kefa','Grow in goodness.'],
+  ['1 John','💕','Love one another, because Yah is love.','Yochanan','Yah is love.'],
+  ['2 John','🚪','Walk in truth and love.','Yochanan','Truth and love go together.'],
+  ['3 John','🏠','Be kind to visitors and helpers.','Yochanan','Welcome others.'],
+  ['Jude','⚓','Hold tight to what is true.','Yehudah','Hold on to truth.'],
+  ['Revelation','🌈','Yochanan\u2019s big dream: one day Yah makes everything new — no more tears!','Yochanan','Yah wins; all things will be made new.']]},
  {name:'Church Helpers',emoji:'⛪',hex:'#8a5a35',dark:'#5f3c20',books:[
   ['Sinodos: Order','📋','Old rules that helped the very first church families.','The apostles','Families need good rules.'],
   ['Sinodos: Commands','📏','Wise commands for living together with love.','The apostles','Rules can be loving.'],
   ['Sinodos: Decrees','🖋️','Careful decisions to keep the church family fair.','The apostles','Be fair to everyone.'],
-  ['Sinodos: Laws','🕯️','More guiding lights for God\u2019s big family.','The apostles','Good guides help us walk.'],
-  ['Covenant, Book 1','🤲','Promises and prayers for God\u2019s family.','The church family','God keeps His promises.'],
-  ['Covenant, Book 2','🌿','Teachings from Jesus for His friends after Easter.','Jesus','Jesus teaches His friends.'],
+  ['Sinodos: Laws','🕯️','More guiding lights for Yah\u2019s big family.','The apostles','Good guides help us walk.'],
+  ['Covenant, Book 1','🤲','Promises and prayers for Yah\u2019s family.','The church family','Yah keeps His promises.'],
+  ['Covenant, Book 2','🌿','Teachings from Yeshua for His friends after Easter.','Yeshua','Yeshua teaches His friends.'],
   ['Ethiopic Clement','📬','A kind letter from a church helper named Clement.','Clement','Helpers keep the peace.'],
   ['Ethiopic Didascalia','🗝️','A guidebook for the church\u2019s leaders.','The leaders','Good leaders serve.']]}
 ];
@@ -430,126 +431,126 @@ const BOOKS=[]; SHELVES.forEach((sh,si)=>sh.books.forEach((b,bi)=>BOOKS.push({sh
 const TOTAL_BOOKS=BOOKS.length; // 89
 
 const HEROES=[
- {clue:'Who built the great big boat for all the animals?',who:'Noah',e:'🚢',tier:1},
- {clue:'Who was swallowed by a great big fish?',who:'Jonah',e:'🐋',tier:1},
+ {clue:'Who built the great big boat for all the animals?',who:'Noach',e:'🚢',tier:1},
+ {clue:'Who was swallowed by a great big fish?',who:'Yonah',e:'🐋',tier:1},
  {clue:'Who was safe all night in the lions\u2019 den?',who:'Daniel',e:'🦁',tier:1},
- {clue:'Which shepherd boy sang songs and beat a giant?',who:'David',e:'🐑',tier:1},
- {clue:'Which baby floated in a basket on the river?',who:'Moses',e:'🧺',tier:1},
- {clue:'Who is Jesus\u2019 mommy?',who:'Mary',e:'🌹',tier:1},
- {clue:'Which baby was born in a manger in Bethlehem?',who:'Jesus',e:'⭐',tier:1},
- {clue:'Which brave queen spoke up and saved her people?',who:'Esther',e:'👸',tier:2},
- {clue:'Who stayed with Naomi and said, where you go, I go?',who:'Ruth',e:'🌾',tier:2},
- {clue:'Who wore a beautiful coat of many colors?',who:'Joseph',e:'🧥',tier:2},
- {clue:'Who was the strongest man, with long, long hair?',who:'Samson',e:'💪',tier:2},
- {clue:'Which big sister watched the baby in the basket?',who:'Miriam',e:'👧',tier:2},
- {clue:'Which prophet was fed by ravens and prayed down fire?',who:'Elijah',e:'🔥',tier:2},
- {clue:'Which fisherman became Jesus\u2019 close friend?',who:'Peter',e:'🎣',tier:2},
- {clue:'Which king asked God for wisdom?',who:'Solomon',e:'👑',tier:2},
- {clue:'Who traveled with an angel, a dog, and a big fish?',who:'Tobias',e:'🐟',tier:3},
- {clue:'Which brave lady saved her whole town?',who:'Judith',e:'⭐',tier:3},
- {clue:'Who walked so close with God that God took him to the sky?',who:'Enoch',e:'🚶',tier:3},
- {clue:'Whose brave family lit the temple lamps again?',who:'Judah Maccabee',e:'🕎',tier:3},
- {clue:'Which brave judge led God\u2019s people under a palm tree?',who:'Deborah',e:'🌴',tier:3},
- {clue:'Which queen rode camels far to visit wise Solomon?',who:'The Queen of Sheba',e:'🐪',tier:3},
- {clue:'Who wrote lots and lots of letters to church families?',who:'Paul',e:'✉️',tier:3}
+ {clue:'Which shepherd boy sang songs and beat a giant?',who:'Dovid',e:'🐑',tier:1},
+ {clue:'Which baby floated in a basket on the river?',who:'Moshe',e:'🧺',tier:1},
+ {clue:'Who is Yeshua\u2019s mommy?',who:'Miryam',e:'🌹',tier:1},
+ {clue:'Which baby was born in a manger in Beit Lechem?',who:'Yeshua',e:'⭐',tier:1},
+ {clue:'Which brave queen spoke up and saved her people?',who:'Ester',e:'👸🏾',tier:2},
+ {clue:'Who stayed with Naomi and said, where you go, I go?',who:'Rut',e:'🌾',tier:2},
+ {clue:'Who wore a beautiful coat of many colors?',who:'Yosef',e:'🧥',tier:2},
+ {clue:'Who was the strongest man, with long, long hair?',who:'Shimshon',e:'💪🏾',tier:2},
+ {clue:'Which big sister watched the baby in the basket?',who:'Miryam',e:'👧🏾',tier:2},
+ {clue:'Which prophet was fed by ravens and prayed down fire?',who:'Eliyahu',e:'🔥',tier:2},
+ {clue:'Which fisherman became Yeshua\u2019s close friend?',who:'Kefa',e:'🎣',tier:2},
+ {clue:'Which king asked Yah for wisdom?',who:'Shlomo',e:'👑',tier:2},
+ {clue:'Who traveled with an angel, a dog, and a big fish?',who:'Toviyah',e:'🐟',tier:3},
+ {clue:'Which brave lady saved her whole town?',who:'Yehudit',e:'⭐',tier:3},
+ {clue:'Who walked so close with Yah that Yah took him to the sky?',who:'Chanoch',e:'🚶🏾',tier:3},
+ {clue:'Whose brave family lit the temple lamps again?',who:'Yehudah HaMakabi',e:'🕎',tier:3},
+ {clue:'Which brave judge led Yah\u2019s people under a palm tree?',who:'Devorah',e:'🌴',tier:3},
+ {clue:'Which queen rode camels far to visit wise Shlomo?',who:'Makeda, Queen of Sheba',e:'🐪',tier:3},
+ {clue:'Who wrote lots and lots of letters to church families?',who:'Sha\u2019ul',e:'✉️',tier:3}
 ];
 const WHICHBOOK=[
- {clue:'God makes the world in this very first book.',book:'Genesis',e:'🌍',tier:1},
+ {clue:'Yah makes the world in this very first book.',book:'Genesis',e:'🌍',tier:1},
  {clue:'The sea opens up so the people can walk through!',book:'Exodus',e:'🌊',tier:1},
  {clue:'A big fish swallows a runaway prophet.',book:'Jonah',e:'🐋',tier:1},
  {clue:'A man prays every day, even in a den of lions.',book:'Daniel',e:'🦁',tier:1},
- {clue:'One hundred fifty songs to sing to God.',book:'Psalms',e:'🎶',tier:1},
+ {clue:'One hundred fifty songs to sing to Yah.',book:'Psalms',e:'🎶',tier:1},
  {clue:'Trumpets blow and the big walls fall down.',book:'Joshua',e:'🎺',tier:2},
- {clue:'A brave queen saves her people.',book:'Esther',e:'👸',tier:2},
- {clue:'Baby Jesus is born and wise men follow the star.',book:'Matthew',e:'⭐',tier:2},
- {clue:'Jesus\u2019 friends share the good news everywhere.',book:'Acts',e:'🔥',tier:2},
+ {clue:'A brave queen saves her people.',book:'Esther',e:'👸🏾',tier:2},
+ {clue:'Baby Yeshua is born and wise men follow the star.',book:'Matthew',e:'⭐',tier:2},
+ {clue:'Yeshua\u2019s friends share the good news everywhere.',book:'Acts',e:'🔥',tier:2},
  {clue:'Love is patient, love is kind.',book:'1 Corinthians',e:'💞',tier:2},
- {clue:'One day God makes everything new — no more tears!',book:'Revelation',e:'🌈',tier:2},
+ {clue:'One day Yah makes everything new — no more tears!',book:'Revelation',e:'🌈',tier:2},
  {clue:'A boy travels with an angel, a dog, and a big fish.',book:'Tobit',e:'🐟',tier:3},
  {clue:'A brave family lights the temple lamps again.',book:'1 Maccabees',e:'🕎',tier:3},
- {clue:'A man walks with God all the way up to the sky.',book:'Enoch',e:'🚶',tier:3},
+ {clue:'A man walks with Yah all the way up to the sky.',book:'Enoch',e:'🚶🏾',tier:3},
  {clue:'The world\u2019s story is told in special sevens.',book:'Jubilees',e:'🗓️',tier:3},
  {clue:'A grandpa\u2019s advice, sweet like honey.',book:'Sirach',e:'🍯',tier:3},
- {clue:'A king says a great big sorry to God.',book:'Prayer of Manasseh',e:'🙏',tier:3},
+ {clue:'A king says a great big sorry to Yah.',book:'Prayer of Manasseh',e:'🙏🏾',tier:3},
  {clue:'A brave lady saves her whole town.',book:'Judith',e:'⭐',tier:3}
 ];
 const LESSONS=[
- {story:'Noah builds a boat, and God paints a rainbow.',e:'🌈',lesson:'God keeps His promises'},
+ {story:'Noach builds a boat, and Yah paints a rainbow.',e:'🌈',lesson:'Yah keeps His promises'},
  {story:'A kind stranger stops to help a hurt traveler.',e:'🤕',lesson:'Be kind to everyone'},
- {story:'Little David faces the giant Goliath.',e:'🎯',lesson:'With God, small is mighty'},
- {story:'Jonah gets a second chance after the big fish.',e:'🐋',lesson:'Everyone gets a second chance'},
- {story:'Ruth stays with Naomi no matter what.',e:'🌾',lesson:'Stay loyal to your family'},
- {story:'Queen Esther speaks up to save her people.',e:'👸',lesson:'Be brave and speak up'},
- {story:'The shepherd looks for his one lost sheep.',e:'🐑',lesson:'God looks for every one of us'},
+ {story:'Little Dovid faces the giant Golyat.',e:'🎯',lesson:'With Yah, small is mighty'},
+ {story:'Yonah gets a second chance after the big fish.',e:'🐋',lesson:'Everyone gets a second chance'},
+ {story:'Rut stays with Naomi no matter what.',e:'🌾',lesson:'Stay loyal to your family'},
+ {story:'Queen Ester speaks up to save her people.',e:'👸🏾',lesson:'Be brave and speak up'},
+ {story:'The shepherd looks for his one lost sheep.',e:'🐑',lesson:'Yah looks for every one of us'},
  {story:'A boy shares his loaves and fish, and everyone eats.',e:'🍞',lesson:'Share what you have'},
  {story:'Daniel keeps praying, even when it is not allowed.',e:'🦁',lesson:'Keep praying every day'},
- {story:'The lost son comes home, and his father runs to hug him.',e:'🤗',lesson:'God always welcomes us home'},
- {story:'God makes the world and asks us to care for it.',e:'🌍',lesson:'Take care of God\u2019s world'},
- {story:'An angel walks with Tobias on his long trip.',e:'😇',lesson:'Angels watch over us'},
- {story:'King Manasseh says a great big sorry to God.',e:'🙏',lesson:'Saying sorry makes things right'}
+ {story:'The lost son comes home, and his father runs to hug him.',e:'🤗',lesson:'Yah always welcomes us home'},
+ {story:'Yah makes the world and asks us to care for it.',e:'🌍',lesson:'Take care of Yah\u2019s world'},
+ {story:'An angel walks with Toviyah on his long trip.',e:'😇',lesson:'Angels watch over us'},
+ {story:'King Menasheh says a great big sorry to Yah.',e:'🙏🏾',lesson:'Saying sorry makes things right'}
 ];
 const STORIES=[
  {id:'creation',emoji:'🌍',title:'The Creation Song',pages:[
-   {s:'🌑✨',t:'In the very beginning, everything was dark and quiet. Then God said: Let there be light!'},
-   {s:'☀️🌙⭐',t:'God made the day and the night, the sun, the moon, and all the twinkly stars.'},
-   {s:'🌊🌴🌷',t:'God made the big blue sea, the tall trees, and every little flower.'},
-   {s:'🐠🐦🦁',t:'God made splashy fish, singing birds, and animals big and small.'},
-   {s:'👫🌍💚',t:'Then God made people, to love Him and to take care of the world.'},
-   {s:'😴🌈🙏',t:'On day seven, God rested. He looked at everything and smiled. It was very, very good.'}]},
- {id:'noah',emoji:'🌈',title:'Noah and the Rainbow',pages:[
-   {s:'🔨🚢🐘',t:'God told Noah: Build a very big boat! So Noah built and built, and the animals came two by two.'},
+   {s:'🌑✨',t:'In the very beginning, everything was dark and quiet. Then Yah said: Let there be light!'},
+   {s:'☀️🌙⭐',t:'Yah made the day and the night, the sun, the moon, and all the twinkly stars.'},
+   {s:'🌊🌴🌷',t:'Yah made the big blue sea, the tall trees, and every little flower.'},
+   {s:'🐠🐦🦁',t:'Yah made splashy fish, singing birds, and animals big and small.'},
+   {s:'👫🏾🌍💚',t:'Then Yah made people, to love Him and to take care of the world.'},
+   {s:'😴🌈🙏🏾',t:'On day seven, Yah rested. He looked at everything and smiled. It was very, very good.'}]},
+ {id:'noah',emoji:'🌈',title:'Noach and the Rainbow',pages:[
+   {s:'🔨🚢🐘',t:'Yah told Noach: Build a very big boat! So Noach built and built, and the animals came two by two.'},
    {s:'🌧️🌧️🚢',t:'Then the rain came down. Drip, drop, splash! It rained for forty days and forty nights.'},
-   {s:'🚢🌊🐒',t:'The big boat floated safe on the water, with Noah and all the animals cozy inside.'},
-   {s:'🕊️🌿☀️',t:'Noah sent out a dove, and she came back with a green leaf. The water was going away!'},
+   {s:'🚢🌊🐒',t:'The big boat floated safe on the water, with Noach and all the animals cozy inside.'},
+   {s:'🕊️🌿☀️',t:'Noach sent out a dove, and she came back with a green leaf. The water was going away!'},
    {s:'🚢⛰️🐾',t:'The boat rested on a mountain, and out marched all the animals. Stretch those legs!'},
-   {s:'🌈🙏💛',t:'God painted a rainbow in the sky and promised to always care for us. Every rainbow says: God keeps His promises.'}]},
- {id:'moses',emoji:'🧺',title:'Baby Moses in the Basket',pages:[
-   {s:'👶🧺🌊',t:'A mommy hid her baby, Moses, in a little basket boat on the river to keep him safe.'},
-   {s:'👧🌾👀',t:'His big sister Miriam watched from the tall, tall grass. Shhh!'},
-   {s:'👸💧🧺',t:'A princess found the basket. Oh, what a sweet baby! she said.'},
-   {s:'👧🏃🤱',t:'Quick as a bunny, Miriam ran up. I know someone who can help! It was their very own mommy.'},
-   {s:'👶🏰💪',t:'Moses grew up big and strong, and God had a very big job just for him.'},
-   {s:'🌊✨🙏',t:'One day Moses would lead God\u2019s people to freedom. God watches over little ones with big plans.'}]},
- {id:'david',emoji:'🐑',title:'David the Shepherd Boy',pages:[
-   {s:'🐑🎶👦',t:'David was a little shepherd boy who sang songs to God while he watched his sheep.'},
-   {s:'🐻🦁💪',t:'When wild animals came near, brave David kept his sheep safe. God made him strong.'},
-   {s:'😠🏔️📣',t:'One day a giant named Goliath shouted mean things at God\u2019s people. Everyone was scared.'},
-   {s:'👦🙏✨',t:'But David said: God is with me! He picked up his sling and five smooth stones.'},
+   {s:'🌈🙏🏾💛',t:'Yah painted a rainbow in the sky and promised to always care for us. Every rainbow says: Yah keeps His promises.'}]},
+ {id:'moses',emoji:'🧺',title:'Baby Moshe in the Basket',pages:[
+   {s:'👶🏾🧺🌊',t:'A mommy hid her baby, Moshe, in a little basket boat on the river to keep him safe.'},
+   {s:'👧🏾🌾👀',t:'His big sister Miryam watched from the tall, tall grass. Shhh!'},
+   {s:'👸🏾💧🧺',t:'A princess found the basket. Oh, what a sweet baby! she said.'},
+   {s:'👧🏾🏃🏾🤱🏾',t:'Quick as a bunny, Miryam ran up. I know someone who can help! It was their very own mommy.'},
+   {s:'👶🏾🏰💪🏾',t:'Moshe grew up big and strong, and Yah had a very big job just for him.'},
+   {s:'🌊✨🙏🏾',t:'One day Moshe would lead Yah\u2019s people to freedom. Yah watches over little ones with big plans.'}]},
+ {id:'david',emoji:'🐑',title:'Dovid the Shepherd Boy',pages:[
+   {s:'🐑🎶👦🏾',t:'Dovid was a little shepherd boy who sang songs to Yah while he watched his sheep.'},
+   {s:'🐻🦁💪🏾',t:'When wild animals came near, brave Dovid kept his sheep safe. Yah made him strong.'},
+   {s:'😠🏔️📣',t:'One day a giant named Golyat shouted mean things at Yah\u2019s people. Everyone was scared.'},
+   {s:'👦🏾🙏🏾✨',t:'But Dovid said: Yah is with me! He picked up his sling and five smooth stones.'},
    {s:'💫🎯😮',t:'Whoosh went the sling — and down went the giant! Everyone cheered.'},
-   {s:'👑🎶💛',t:'David grew up to be a great king who wrote songs we still sing. With God, even small people can do big things.'}]},
- {id:'jonah',emoji:'🐋',title:'Jonah and the Big Fish',pages:[
-   {s:'🗣️➡️🏙️',t:'God said: Jonah, go to the big city and tell the people to be kind. But Jonah said: No, thank you!'},
-   {s:'⛵🌊🏃',t:'Jonah ran away on a boat. But a big storm came. Whoosh! Splash!'},
-   {s:'🌊🐋😮',t:'Jonah fell into the sea, and a great big fish swallowed him whole. Gulp!'},
-   {s:'🐋🙏💭',t:'Inside the fish it was dark and quiet. Jonah prayed: I am sorry, God. I will obey.'},
-   {s:'🐋💨🏖️',t:'The fish put Jonah right back on the beach. Off he ran to the city!'},
-   {s:'🏙️💛🌈',t:'The people listened and changed their ways, and God forgave them all. Everyone gets a second chance.'}]},
- {id:'tobias',emoji:'🐟',title:'Tobias, the Angel, and the Dog',pages:[
-   {s:'👴💰🗺️',t:'Old Tobit sent his son Tobias on a long trip to fetch some family treasure.'},
-   {s:'🚶😇🐕',t:'A kind helper named Raphael came along, and so did a happy little dog. Off they went!'},
-   {s:'🌊🐟😲',t:'At the river, a big fish jumped up. Catch it, said Raphael. It will help us!'},
-   {s:'💒💗🎉',t:'On the way, Tobias met Sarah, and they got married. What a happy day!'},
-   {s:'🏠👴✨',t:'Back home, the special fish medicine helped old Tobit\u2019s eyes see again. Hooray!'},
-   {s:'😇🕊️💛',t:'Then Raphael smiled: I am an angel God sent to help you. God sends helpers to watch over us.'}]},
+   {s:'👑🎶💛',t:'Dovid grew up to be a great king who wrote songs we still sing. With Yah, even small people can do big things.'}]},
+ {id:'jonah',emoji:'🐋',title:'Yonah and the Big Fish',pages:[
+   {s:'🗣️➡️🏙️',t:'Yah said: Yonah, go to the big city and tell the people to be kind. But Yonah said: No, thank you!'},
+   {s:'⛵🌊🏃🏾',t:'Yonah ran away on a boat. But a big storm came. Whoosh! Splash!'},
+   {s:'🌊🐋😮',t:'Yonah fell into the sea, and a great big fish swallowed him whole. Gulp!'},
+   {s:'🐋🙏🏾💭',t:'Inside the fish it was dark and quiet. Yonah prayed: I am sorry, Yah. I will obey.'},
+   {s:'🐋💨🏖️',t:'The fish put Yonah right back on the beach. Off he ran to the city!'},
+   {s:'🏙️💛🌈',t:'The people listened and changed their ways, and Yah forgave them all. Everyone gets a second chance.'}]},
+ {id:'tobias',emoji:'🐟',title:'Toviyah, the Angel, and the Dog',pages:[
+   {s:'👴🏾💰🗺️',t:'Old Tovit sent his son Toviyah on a long trip to fetch some family treasure.'},
+   {s:'🚶🏾😇🐕',t:'A kind helper named Refael came along, and so did a happy little dog. Off they went!'},
+   {s:'🌊🐟😲',t:'At the river, a big fish jumped up. Catch it, said Refael. It will help us!'},
+   {s:'💒💗🎉',t:'On the way, Toviyah met Sarah, and they got married. What a happy day!'},
+   {s:'🏠👴🏾✨',t:'Back home, the special fish medicine helped old Tovit\u2019s eyes see again. Hooray!'},
+   {s:'😇🕊️💛',t:'Then Refael smiled: I am an angel Yah sent to help you. Yah sends helpers to watch over us.'}]},
  {id:'daniel',emoji:'🦁',title:'Daniel and the Lions',pages:[
-   {s:'🙏🪟☀️',t:'Daniel loved God and prayed by his window three times every day.'},
+   {s:'🙏🏾🪟☀️',t:'Daniel loved Yah and prayed by his window three times every day.'},
    {s:'😠📜👑',t:'Some grumpy men made a rule: No praying! But Daniel kept praying anyway.'},
    {s:'🦁🕳️😟',t:'So Daniel was put in a den full of hungry lions. Oh no!'},
-   {s:'😇🦁💤',t:'But God sent an angel who closed the lions\u2019 mouths. The lions just yawned and slept.'},
-   {s:'🌅👑😃',t:'In the morning the king called: Daniel, are you safe? Yes! God kept me safe all night!'},
-   {s:'🦁💛🙏',t:'Everyone learned how strong God is. Keep praying every day, just like Daniel.'}]},
+   {s:'😇🦁💤',t:'But Yah sent an angel who closed the lions\u2019 mouths. The lions just yawned and slept.'},
+   {s:'🌅👑😃',t:'In the morning the king called: Daniel, are you safe? Yes! Yah kept me safe all night!'},
+   {s:'🦁💛🙏🏾',t:'Everyone learned how strong Yah is. Keep praying every day, just like Daniel.'}]},
  {id:'star',emoji:'⭐',title:'The Night the Star Shone',pages:[
-   {s:'🤱👶🌟',t:'In a little town called Bethlehem, baby Jesus was born. Mary wrapped him up warm.'},
+   {s:'🤱🏾👶🏾🌟',t:'In a little town called Beit Lechem, baby Yeshua was born. Miryam wrapped him up warm.'},
    {s:'🐄🐑🛏️',t:'His first bed was a manger, a soft hay box, with gentle animals all around.'},
-   {s:'🐑🌟😇',t:'Angels sang to shepherds on the hills: Good news! A Savior is born tonight!'},
-   {s:'🏃🐑👶',t:'The shepherds hurried to see the baby, and their hearts filled up with joy.'},
+   {s:'🐑🌟😇',t:'Angels sang to shepherds on the hills: Good news! A Mashiach is born tonight!'},
+   {s:'🏃🏾🐑👶🏾',t:'The shepherds hurried to see the baby, and their hearts filled up with joy.'},
    {s:'⭐🐪🎁',t:'Far away, wise men followed a bright star and brought the baby wonderful gifts.'},
-   {s:'🌟💛🌍',t:'That little baby was God\u2019s best gift of love for the whole wide world.'}]}
+   {s:'🌟💛🌍',t:'That little baby was Yah\u2019s best gift of love for the whole wide world.'}]}
 ];
 const WORLDS=[
  {id:'shelf',    name:'Big Bookshelf', emoji:'📚',cls:'w-rainbow'},
  {id:'count',    name:'Count the Books',emoji:'🔢',cls:'w-colors'},
- {id:'heroes',   name:'Bible Heroes',  emoji:'🦸',cls:'w-garden'},
+ {id:'heroes',   name:'Bible Heroes',  emoji:'🦸🏾',cls:'w-garden'},
  {id:'whichbook',name:'Which Book?',   emoji:'🔍',cls:'w-energy'},
  {id:'lessons',  name:'Heart Lessons', emoji:'💛',cls:'w-space'},
  {id:'story',    name:'Story Time',    emoji:'📖',cls:'w-story'}
@@ -901,10 +902,31 @@ function handleAnswer(correct,btn,worldId,explain){
   }
 }
 
+/* ---------------- HEBREW → ENGLISH NAMES (taught as kids advance) ---------------- */
+const HEB2EN={Moshe:'Moses',Noach:'Noah',Dovid:'David',Yonah:'Jonah',Ester:'Esther',Rut:'Ruth',
+ Yosef:'Joseph',Shimshon:'Samson',Devorah:'Deborah',Miryam:'Miriam / Mary',Yehoshua:'Joshua',
+ Shlomo:'Solomon',Eliyahu:'Elijah',Kefa:'Peter','Sha\u2019ul':'Paul',Yochanan:'John',
+ 'Ya\u2019akov':'James',Timotiyos:'Timothy',Titos:'Titus',Onesimos:'Onesimus',Tovit:'Tobit',
+ Toviyah:'Tobias',Refael:'Raphael','King Menasheh':'King Manasseh',Chanoch:'Enoch',Iyov:'Job',
+ Yeshayahu:'Isaiah',Yirmeyahu:'Jeremiah',Yechezkel:'Ezekiel',Hoshea:'Hosea',Yoel:'Joel',
+ Ovadyah:'Obadiah',Michah:'Micah',Nachum:'Nahum',Chavakuk:'Habakkuk',Tzefanyah:'Zephaniah',
+ Chaggai:'Haggai',Zecharyah:'Zechariah',Nechemyah:'Nehemiah',Chavah:'Eve',Golyat:'Goliath',
+ Yeshua:'Jesus','Yehudah HaMakabi':'Judah Maccabee',Yehudit:'Judith',Yehudah:'Jude',
+ 'Makeda, Queen of Sheba':'The Queen of Sheba'};
+function heroEn(n){
+  if(HEB2EN[n]) return HEB2EN[n];
+  if(n.includes(' & ')){
+    const j=n.split(' & ').map(x=>HEB2EN[x]||x).join(' & ');
+    return j!==n? j : null;
+  }
+  return null;
+}
+
 /* ---------------- WORLD: BIG BOOKSHELF ---------------- */
 function shelfProg(p){ const pr=prog(p,'shelf'); if(!pr.exp) pr.exp={}; return pr; }
 function exploredCount(p){ return Object.keys(shelfProg(p).exp).length; }
 function openShelves(){
+  if(karaokeStop) karaokeStop();
   show('scr-game');
   setGameChrome('shelf');
   const p=curPlayer();
@@ -926,6 +948,7 @@ function openShelves(){
   nextQ=openShelves;
 }
 function openShelf(si){
+  if(karaokeStop) karaokeStop();
   setGameChrome('shelf');
   const p=curPlayer(), sh=SHELVES[si], pr=shelfProg(p);
   $('gLvl').textContent='📚 '+exploredCount(p)+' of '+TOTAL_BOOKS;
@@ -955,10 +978,20 @@ function showBook(si,gi,bk){
   const stage=$('gStage'); stage.innerHTML='';
   $('gPrompt').textContent=bk[0];
   const card=document.createElement('div'); card.className='storypage';
-  card.innerHTML=`<div class="scene">${bk[1]}</div>
-    <div class="stext">${bk[2]}<br><br><b>Hero:</b> ${bk[3]}<br><b>Lesson:</b> ${bk[4]}</div>`;
+  card.innerHTML=`<div class="scene">${bk[1]}</div><div class="stext" id="bktext"></div>`;
   stage.appendChild(card);
-  narrate(bk[0]+'! '+bk[2]+' The hero is '+bk[3]+'. The lesson: '+bk[4]);
+  const en=heroEn(bk[3]);
+  const grown=prog(p,'heroes').lvl>=3;
+  const heroTxt=bk[3]+((grown&&en)?' — in English, '+en:'');
+  const line=bk[0]+'! '+bk[2]+' The hero: '+heroTxt+'. The lesson: '+bk[4];
+  const tokens=line.split(/\s+/).filter(Boolean);
+  const box=$('bktext');
+  tokens.forEach((t,i)=>{
+    const sp=document.createElement('span'); sp.className='w'; sp.textContent=t;
+    box.appendChild(sp);
+    if(i<tokens.length-1) box.appendChild(document.createTextNode(' '));
+  });
+  narrateKaraoke(tokens,[...box.querySelectorAll('.w')]);
   const back=document.createElement('button'); back.className='big-btn ghost'; back.style.marginTop='16px';
   back.textContent='← More books';
   back.addEventListener('pointerdown',()=>openShelf(si));
@@ -1031,8 +1064,13 @@ function qHeroes(){
   $('gPrompt').textContent=c.clue;
   narrate(c.clue);
   const wrong=pick(HEROES.filter(h=>h.who!==c.who),n-1);
-  const opts=shuffle([c,...wrong]).map(h=>({emoji:h.e,label:h.who,say:h.who,hex:'#2f9e63',dark:'#1d6b41',ok:h.who===c.who}));
-  stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'heroes',o.ok?c.who+'! That’s right!':null)));
+  const en=heroEn(c.who);
+  const opts=shuffle([c,...wrong]).map(h=>{
+    const he=heroEn(h.who);
+    return {emoji:h.e,label:h.who+((lvl>=3&&he)?' · '+he:''),say:h.who,hex:'#2f9e63',dark:'#1d6b41',ok:h.who===c.who};
+  });
+  stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'heroes',
+    o.ok?((lvl>=3&&en)? c.who+'! In English we say '+en+'.' : c.who+'! That’s right!'):null)));
 }
 
 /* ---------------- WORLD: WHICH BOOK? ---------------- */
