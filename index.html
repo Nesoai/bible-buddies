@@ -48,10 +48,43 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
 #hill{position:fixed;left:-10%;right:-10%;bottom:-6vh;height:26vh;background:radial-gradient(120% 100% at 50% 0,#79ce7f 0,#4fae63 60%,#3b8f4f 100%);border-radius:50% 50% 0 0;z-index:0;pointer-events:none}
 #hill:after{content:"🌳 🌷 🦋 🕊️ 🌸 🐑 🌼 🌿";position:absolute;top:14px;left:0;right:0;text-align:center;font-size:clamp(18px,4vw,30px);letter-spacing:2vw;filter:saturate(1.1)}
 #sun{position:fixed;top:4vh;right:6vw;width:min(16vw,110px);height:min(16vw,110px);border-radius:50%;background:radial-gradient(circle,#fff3c4 0%,#ffd76b 55%,rgba(255,215,107,0) 72%);box-shadow:0 0 60px 24px rgba(255,223,142,.55);z-index:0;pointer-events:none}
+#sun:before{content:"";position:absolute;inset:-70%;border-radius:50%;background:repeating-conic-gradient(rgba(255,225,140,.35) 0 7deg,transparent 7deg 18deg);animation:sunspin 46s linear infinite}
+@keyframes sunspin{to{transform:rotate(360deg)}}
+#hill2{position:fixed;left:-14%;right:-14%;bottom:-2vh;height:34vh;background:radial-gradient(120% 100% at 50% 0,#a5e0a0 0,#82c886 70%,#6ab471 100%);border-radius:50% 50% 0 0;z-index:0;pointer-events:none}
+#hill2:after{content:"🌳 \00a0 🌳 \00a0 🌲 \00a0 🌳";position:absolute;top:6px;left:0;right:0;text-align:center;font-size:clamp(24px,6vw,44px);letter-spacing:14vw;opacity:.9}
+.balloon{position:absolute;font-size:clamp(26px,5vw,40px);bottom:-12%;animation:rise 20s linear infinite;opacity:.9}
+@keyframes rise{0%{transform:translateY(0) translateX(0)}25%{transform:translateY(-30vh) translateX(14px)}50%{transform:translateY(-60vh) translateX(-10px)}75%{transform:translateY(-90vh) translateX(12px)}100%{transform:translateY(-120vh) translateX(0)}}
 .cloud{position:absolute;font-size:clamp(30px,6vw,54px);opacity:.9;animation:drift2 26s linear infinite}
 @keyframes drift2{from{transform:translateX(-15vw)}to{transform:translateX(115vw)}}
 .firefly{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--sun);box-shadow:0 0 12px 4px rgba(255,200,74,.55);animation:drift 9s ease-in-out infinite}
 @keyframes drift{0%,100%{transform:translate(0,0)}25%{transform:translate(26px,-34px)}50%{transform:translate(-18px,-58px)}75%{transform:translate(20px,-22px)}}
+
+/* ---------- candy / ABC-style polish ---------- */
+.big-btn,.opt,.world,.basket{position:relative;overflow:hidden;border:4px solid rgba(255,255,255,.75)}
+.big-btn:before,.opt:before,.world:before,.basket:before{content:"";position:absolute;left:6%;right:6%;top:4px;height:40%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
+.big-btn.ghost{border:3px dashed rgba(255,255,255,.65)}
+.big-btn.ghost:before{display:none}
+.bookcard{border:3px solid #fff}
+.ogrid .opt,.baskets .basket{animation:popopt .45s cubic-bezier(.34,1.56,.64,1) backwards}
+.ogrid .opt:nth-child(2),.baskets .basket:nth-child(2){animation-delay:.07s}
+.ogrid .opt:nth-child(3){animation-delay:.14s}
+.ogrid .opt:nth-child(4){animation-delay:.21s}
+@keyframes popopt{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.world{animation:popopt .45s cubic-bezier(.34,1.56,.64,1) backwards}
+.world:nth-child(2){animation-delay:.06s}.world:nth-child(3){animation-delay:.12s}
+.world:nth-child(4){animation-delay:.18s}.world:nth-child(5){animation-delay:.24s}.world:nth-child(6){animation-delay:.3s}
+.world:nth-child(odd){rotate:-1.6deg}.world:nth-child(even){rotate:1.6deg}
+.world:active{rotate:0deg}
+.world .wemoji{animation:bob 2.8s ease-in-out infinite}
+.world:nth-child(even) .wemoji{animation-delay:1.4s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+#starChip.bump,#gStars.bump{animation:bumpstar .55s ease}
+@keyframes bumpstar{35%{transform:scale(1.3) rotate(-5deg)}70%{transform:scale(1.1) rotate(3deg)}}
+/* dove guide + speech bubble */
+#guide{position:fixed;left:10px;bottom:10px;z-index:40;display:flex;align-items:flex-end;gap:8px;pointer-events:none}
+#guideBtn{pointer-events:auto;width:64px;height:64px;border-radius:50%;font-size:32px;background:var(--moonmilk);border:4px solid #fff;box-shadow:0 6px 0 rgba(0,0,0,.18);animation:bob 3.2s ease-in-out infinite;cursor:pointer;display:grid;place-items:center}
+#bubble{max-width:min(58vw,300px);background:#fff;color:var(--ink);border-radius:18px 18px 18px 4px;padding:10px 14px;font-family:'Baloo 2';font-weight:700;font-size:15px;line-height:1.3;box-shadow:0 4px 10px rgba(0,0,0,.2);opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;margin-bottom:6px}
+#bubble.on{opacity:1;transform:none}
 
 /* ---------- screens ---------- */
 .screen{position:fixed;inset:0;z-index:2;display:none;flex-direction:column;align-items:center;padding:max(14px,env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -217,6 +250,7 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
 <body>
 <div id="sky"></div>
 <div id="sun"></div>
+<div id="hill2"></div>
 <div id="hill"></div>
 
 <!-- SPLASH -->
@@ -226,7 +260,7 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
     <p class="sub">Yah’s giant bookshelf — 89 books of stories &amp; songs 📚</p>
     <div class="splash-kid" id="splashKid"></div>
     <button class="big-btn gold" id="btnStart">▶ &nbsp;Tap to play!</button>
-    <p class="footnote" style="margin-top:4px">Made with love by Boundless · sound on 🔊 · v1.1</p>
+    <p class="footnote" style="margin-top:4px">Made with love by Boundless · sound on 🔊 · v1.2</p>
   </div>
 </section>
 
@@ -302,7 +336,7 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
     <p><b>Bible Buddies</b> is a narrated tap-and-learn Bible game for ages 2–6: a tappable bookshelf of 89 books (each with a one-line summary, a hero, and a lesson), counting games, hero and which-book quizzes, heart-lesson matching, and 8 read-aloud stories with bouncing words. Every prompt is read out loud, so pre-readers can play on their own.</p>
     <p><b>Progress</b> saves on this device automatically — each child picks their animal and picks up where they left off. Levels adjust up and down on their own as your child answers.</p>
     <p><b>About the 89 books:</b> this shelf merges the Hebrew Bible (Tanakh), the Apocrypha / Deuterocanonical books, and the Ethiopian Orthodox Tewahedo broader canon — traditionally counted as 81 books, the largest Bible canon in the world. Counting every named book separately (traditions group some together), the merged shelf holds 89. Summaries are simplified and kept gentle for little ones.</p>
-    <p><b>Sacred &amp; Hebrew names:</b> the game says <b>Yah</b> and <b>Yeshua (HaMashiach)</b>, and uses Hebrew names for people — Moshe, Noach, Dovid, Ester, Yonah, Yehudit, Chanoch… As children advance, the English names are taught alongside: at level 3 in Bible Heroes the cards show both (Moshe · Moses), and the bookshelf read-alouds add "in English, Moses." Book titles stay in English so pairs like Yonah-in-the-book-of-Jonah teach the connection naturally.</p>
+    <p><b>Sacred &amp; Hebrew names:</b> the game says <b>Yah</b> and <b>Yehoshua HaMashiach</b>, and uses Hebrew names for people — Moshe, Noach, Dovid, Ester, Yonah, Yehudit, Chanoch… As children advance, the English names are taught alongside: at level 3 in Bible Heroes the cards show both (Moshe · Moses), and the bookshelf read-alouds add "in English, Moses." Book titles stay in English so pairs like Yonah-in-the-book-of-Jonah teach the connection naturally.</p>
     <div class="setrow">🔊 Read everything out loud <button class="toggle on" id="tgVoice"></button></div>
     <div class="setrow">🎤 Voice commands (say "home", "again", or an answer) <button class="toggle" id="tgMic"></button></div>
     <div class="setrow">✨ Extra sparkles &amp; motion <button class="toggle on" id="tgFx"></button></div>
@@ -310,6 +344,9 @@ h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
     <p class="footnote" style="margin:14px auto 0">Built by Boundless · boundless.mbf@gmail.com</p>
   </div>
 </section>
+
+<!-- DOVE GUIDE -->
+<div id="guide"><div id="bubble"></div><button id="guideBtn" aria-label="Say it again">🕊️</button></div>
 
 <!-- CHEER OVERLAY -->
 <div id="cheer"><div id="cheerCard">
@@ -388,12 +425,12 @@ const SHELVES=[
   ['Haggai','🔨','Time to build Yah\u2019s house — first things first!','Chaggai','Put Yah first.'],
   ['Zechariah','🐴','A gentle king will come riding on a little donkey.','Zecharyah','Yah\u2019s king is gentle.'],
   ['Malachi','📮','Yah\u2019s last letter before a long quiet time — get ready!','Malachi','Get your heart ready.']]},
- {name:'Yeshua shelf',emoji:'⭐',hex:'#2f6fd6',dark:'#1e4c99',books:[
-  ['Matthew','👑','Yeshua is born — the promised King! Wise men follow the star.','Yeshua','Yeshua is the promised King.'],
-  ['Mark','🏃🏾','Quick! Yeshua helps people everywhere he goes.','Yeshua','Yeshua came to help.'],
-  ['Luke','💗','Yeshua loves everyone — especially people others forget.','Yeshua','Everyone matters to Yeshua.'],
-  ['John','✨','Yeshua is Yah\u2019s light and love for the whole world.','Yeshua','Yah so loved the world.'],
-  ['Acts','🔥','Yeshua\u2019s friends tell the good news everywhere!','Kefa & Sha\u2019ul','Share good news.']]},
+ {name:'HaMashiach shelf',emoji:'⭐',hex:'#2f6fd6',dark:'#1e4c99',books:[
+  ['Matthew','👑','Yehoshua HaMashiach is born — the promised King! Wise men follow the star.','Yehoshua HaMashiach','Yehoshua HaMashiach is the promised King.'],
+  ['Mark','🏃🏾','Quick! Yehoshua HaMashiach helps people everywhere he goes.','Yehoshua HaMashiach','Yehoshua HaMashiach came to help.'],
+  ['Luke','💗','Yehoshua HaMashiach loves everyone — especially people others forget.','Yehoshua HaMashiach','Everyone matters to Yehoshua HaMashiach.'],
+  ['John','✨','Yehoshua HaMashiach is Yah\u2019s light and love for the whole world.','Yehoshua HaMashiach','Yah so loved the world.'],
+  ['Acts','🔥','Yehoshua HaMashiach\u2019s friends tell the good news everywhere!','Kefa & Sha\u2019ul','Share good news.']]},
  {name:'Letters shelf',emoji:'✉️',hex:'#5d6db5',dark:'#414e8c',books:[
   ['Romans','💌','Sha\u2019ul writes: Yah\u2019s love is a free gift.','Sha\u2019ul','Yah\u2019s love is a gift.'],
   ['1 Corinthians','💞','Love is patient, love is kind.','Sha\u2019ul','Love is the greatest.'],
@@ -401,14 +438,14 @@ const SHELVES=[
   ['Galatians','🕊️','Yah\u2019s children are free to love.','Sha\u2019ul','Love makes us free.'],
   ['Ephesians','🛡️','Put on Yah\u2019s armor of love and truth.','Sha\u2019ul','Yah makes us one family.'],
   ['Philippians','😊','Be joyful always — Sha\u2019ul sings even in jail!','Sha\u2019ul','Choose joy.'],
-  ['Colossians','🌞','Yeshua is first in everything.','Sha\u2019ul','Keep Yeshua first.'],
+  ['Colossians','🌞','Yehoshua HaMashiach is first in everything.','Sha\u2019ul','Keep Yehoshua HaMashiach first.'],
   ['1 Thessalonians','⏰','Live ready and keep loving each other.','Sha\u2019ul','Keep loving, be ready.'],
   ['2 Thessalonians','💪🏾','Don\u2019t get tired of doing good.','Sha\u2019ul','Keep doing good.'],
   ['1 Timothy','🧭','Sha\u2019ul teaches young Timotiyos how to lead with love.','Timotiyos','You\u2019re never too young to do good.'],
   ['2 Timothy','🏅','Finish the race! Keep the faith.','Sha\u2019ul','Never give up.'],
   ['Titus','🤝','Do good things that help everyone.','Titos','Good deeds shine.'],
   ['Philemon','🤗','A little letter about forgiving and welcoming a friend.','Onesimos','Forgive and welcome.'],
-  ['Hebrews','⛰️','Yeshua is the best — keep trusting Him.','The faithful','Faith keeps us going.'],
+  ['Hebrews','⛰️','Yehoshua HaMashiach is the best — keep trusting Him.','The faithful','Faith keeps us going.'],
   ['James','🍎','Don\u2019t just hear good words — do them!','Ya\u2019akov','Kind doing beats just saying.'],
   ['1 Peter','💎','Be brave when things are hard; Yah cares for you.','Kefa','Give Yah your worries.'],
   ['2 Peter','🌅','Remember what is true and keep growing good.','Kefa','Grow in goodness.'],
@@ -423,7 +460,7 @@ const SHELVES=[
   ['Sinodos: Decrees','🖋️','Careful decisions to keep the church family fair.','The apostles','Be fair to everyone.'],
   ['Sinodos: Laws','🕯️','More guiding lights for Yah\u2019s big family.','The apostles','Good guides help us walk.'],
   ['Covenant, Book 1','🤲','Promises and prayers for Yah\u2019s family.','The church family','Yah keeps His promises.'],
-  ['Covenant, Book 2','🌿','Teachings from Yeshua for His friends after Easter.','Yeshua','Yeshua teaches His friends.'],
+  ['Covenant, Book 2','🌿','Teachings from Yehoshua HaMashiach for His friends after Easter.','Yehoshua HaMashiach','Yehoshua HaMashiach teaches His friends.'],
   ['Ethiopic Clement','📬','A kind letter from a church helper named Clement.','Clement','Helpers keep the peace.'],
   ['Ethiopic Didascalia','🗝️','A guidebook for the church\u2019s leaders.','The leaders','Good leaders serve.']]}
 ];
@@ -436,15 +473,15 @@ const HEROES=[
  {clue:'Who was safe all night in the lions\u2019 den?',who:'Daniel',e:'🦁',tier:1},
  {clue:'Which shepherd boy sang songs and beat a giant?',who:'Dovid',e:'🐑',tier:1},
  {clue:'Which baby floated in a basket on the river?',who:'Moshe',e:'🧺',tier:1},
- {clue:'Who is Yeshua\u2019s mommy?',who:'Miryam',e:'🌹',tier:1},
- {clue:'Which baby was born in a manger in Beit Lechem?',who:'Yeshua',e:'⭐',tier:1},
+ {clue:'Who is Yehoshua HaMashiach\u2019s mommy?',who:'Miryam',e:'🌹',tier:1},
+ {clue:'Which baby was born in a manger in Beit Lechem?',who:'Yehoshua HaMashiach',e:'⭐',tier:1},
  {clue:'Which brave queen spoke up and saved her people?',who:'Ester',e:'👸🏾',tier:2},
  {clue:'Who stayed with Naomi and said, where you go, I go?',who:'Rut',e:'🌾',tier:2},
  {clue:'Who wore a beautiful coat of many colors?',who:'Yosef',e:'🧥',tier:2},
  {clue:'Who was the strongest man, with long, long hair?',who:'Shimshon',e:'💪🏾',tier:2},
  {clue:'Which big sister watched the baby in the basket?',who:'Miryam',e:'👧🏾',tier:2},
  {clue:'Which prophet was fed by ravens and prayed down fire?',who:'Eliyahu',e:'🔥',tier:2},
- {clue:'Which fisherman became Yeshua\u2019s close friend?',who:'Kefa',e:'🎣',tier:2},
+ {clue:'Which fisherman became Yehoshua HaMashiach\u2019s close friend?',who:'Kefa',e:'🎣',tier:2},
  {clue:'Which king asked Yah for wisdom?',who:'Shlomo',e:'👑',tier:2},
  {clue:'Who traveled with an angel, a dog, and a big fish?',who:'Toviyah',e:'🐟',tier:3},
  {clue:'Which brave lady saved her whole town?',who:'Yehudit',e:'⭐',tier:3},
@@ -462,8 +499,8 @@ const WHICHBOOK=[
  {clue:'One hundred fifty songs to sing to Yah.',book:'Psalms',e:'🎶',tier:1},
  {clue:'Trumpets blow and the big walls fall down.',book:'Joshua',e:'🎺',tier:2},
  {clue:'A brave queen saves her people.',book:'Esther',e:'👸🏾',tier:2},
- {clue:'Baby Yeshua is born and wise men follow the star.',book:'Matthew',e:'⭐',tier:2},
- {clue:'Yeshua\u2019s friends share the good news everywhere.',book:'Acts',e:'🔥',tier:2},
+ {clue:'Baby Yehoshua HaMashiach is born and wise men follow the star.',book:'Matthew',e:'⭐',tier:2},
+ {clue:'Yehoshua HaMashiach\u2019s friends share the good news everywhere.',book:'Acts',e:'🔥',tier:2},
  {clue:'Love is patient, love is kind.',book:'1 Corinthians',e:'💞',tier:2},
  {clue:'One day Yah makes everything new — no more tears!',book:'Revelation',e:'🌈',tier:2},
  {clue:'A boy travels with an angel, a dog, and a big fish.',book:'Tobit',e:'🐟',tier:3},
@@ -540,7 +577,7 @@ const STORIES=[
    {s:'🌅👑😃',t:'In the morning the king called: Daniel, are you safe? Yes! Yah kept me safe all night!'},
    {s:'🦁💛🙏🏾',t:'Everyone learned how strong Yah is. Keep praying every day, just like Daniel.'}]},
  {id:'star',emoji:'⭐',title:'The Night the Star Shone',pages:[
-   {s:'🤱🏾👶🏾🌟',t:'In a little town called Beit Lechem, baby Yeshua was born. Miryam wrapped him up warm.'},
+   {s:'🤱🏾👶🏾🌟',t:'In a little town called Beit Lechem, baby Yehoshua HaMashiach was born. Miryam wrapped him up warm.'},
    {s:'🐄🐑🛏️',t:'His first bed was a manger, a soft hay box, with gentle animals all around.'},
    {s:'🐑🌟😇',t:'Angels sang to shepherds on the hills: Good news! A Mashiach is born tonight!'},
    {s:'🏃🏾🐑👶🏾',t:'The shepherds hurried to see the baby, and their hearts filled up with joy.'},
@@ -600,7 +637,18 @@ function say(text,opts={}){
   }catch(e){}
 }
 let lastLine='';
-function narrate(text,opts){ lastLine=text; say(text,opts); }
+function bubble(t){
+  const b=document.getElementById('bubble'); if(!b) return;
+  if(!t){ b.classList.remove('on'); return; }
+  b.textContent = t.length>150 ? t.slice(0,150)+'…' : t;
+  b.classList.add('on');
+  clearTimeout(bubble.t); bubble.t=setTimeout(()=>b.classList.remove('on'), 8000);
+}
+function narrate(text,opts){ lastLine=text; bubble(text); say(text,opts); }
+function bumpStars(){
+  ['starChip','gStars'].forEach(id=>{const c=document.getElementById(id); if(!c) return;
+    c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');});
+}
 
 /* Read text aloud while bouncing each word (with a timing fallback
    for browsers that don't report word boundaries, e.g. iOS Safari). */
@@ -608,7 +656,7 @@ let karaokeStop=null;
 function narrateKaraoke(tokens,spans){
   if(karaokeStop) karaokeStop();
   const text=tokens.join(' ');
-  lastLine=text;
+  lastLine=text; bubble(text);
   const offs=[]; let c=0; tokens.forEach(t=>{offs.push(c); c+=t.length+1;});
   const hl=i=>spans.forEach((s,j)=>s.classList.toggle('on',j===i));
   let timers=[]; let done=false;
@@ -663,6 +711,8 @@ const sfx={
   for(let i=0;i<16;i++){const d=document.createElement('i');d.className='tw';
     d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*45}%;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;animation-delay:${Math.random()*4}s`;
     s.appendChild(d);}
+  [['🎈','8%',0],['🦋','78%',9]].forEach(([em,left,delay])=>{const b=document.createElement('i');b.className='balloon';b.textContent=em;
+    b.style.cssText=`left:${left};animation-delay:${delay}s`; s.appendChild(b);});
   for(let i=0;i<4;i++){const f=document.createElement('i');f.className='cloud';f.textContent='☁️';
     f.style.cssText=`top:${4+Math.random()*32}%;animation-delay:${-Math.random()*26}s;animation-duration:${22+Math.random()*14}s`;
     s.appendChild(f);}
@@ -823,7 +873,7 @@ function showTurn(){
 }
 function award(p,world){
   p.stars++; const pr=prog(p,world); pr.done++; pr.streak++; pr.miss=0; save();
-  $('gStars').textContent='⭐ '+partyStars();
+  $('gStars').textContent='⭐ '+partyStars(); bumpStars();
   // level up after 4 in a row
   if(pr.streak>=4 && pr.lvl<3){
     pr.lvl++; pr.streak=0; save();
@@ -911,7 +961,7 @@ const HEB2EN={Moshe:'Moses',Noach:'Noah',Dovid:'David',Yonah:'Jonah',Ester:'Esth
  Yeshayahu:'Isaiah',Yirmeyahu:'Jeremiah',Yechezkel:'Ezekiel',Hoshea:'Hosea',Yoel:'Joel',
  Ovadyah:'Obadiah',Michah:'Micah',Nachum:'Nahum',Chavakuk:'Habakkuk',Tzefanyah:'Zephaniah',
  Chaggai:'Haggai',Zecharyah:'Zechariah',Nechemyah:'Nehemiah',Chavah:'Eve',Golyat:'Goliath',
- Yeshua:'Jesus','Yehudah HaMakabi':'Judah Maccabee',Yehudit:'Judith',Yehudah:'Jude',
+ 'Yehoshua HaMashiach':'Jesus','Yehudah HaMakabi':'Judah Maccabee',Yehudit:'Judith',Yehudah:'Jude',
  'Makeda, Queen of Sheba':'The Queen of Sheba'};
 function heroEn(n){
   if(HEB2EN[n]) return HEB2EN[n];
@@ -999,7 +1049,7 @@ function showBook(si,gi,bk){
   const n=exploredCount(p);
   $('gLvl').textContent='📚 '+n+' of '+TOTAL_BOOKS;
   if(first){
-    p.stars++; save(); $('gStars').textContent='⭐ '+partyStars();
+    p.stars++; save(); $('gStars').textContent='⭐ '+partyStars(); bumpStars();
     if(n===TOTAL_BOOKS) cheer('🏆','ALL '+TOTAL_BOOKS+' BOOKS!',p.name+' explored the whole bookshelf! Amazing!','Hooray!',()=>openShelves());
     else if(n%10===0) cheer('📚',n+' books explored!','What a bookworm you are, '+p.name+'!','Keep reading!',()=>openShelf(si));
     else confetti(8);
@@ -1180,6 +1230,8 @@ function startListen(){
 }
 $('btnMic').addEventListener('pointerdown',startListen);
 // mic buttons also live on the game screen via long-press of the speaker? keep simple: map screen only.
+
+document.getElementById('guideBtn').addEventListener('pointerdown',()=>{ if(lastLine){ bubble(lastLine); say(lastLine); } });
 
 /* ---------------- GROWN-UPS ---------------- */
 function bindToggle(id,key){
