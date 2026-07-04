@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Bible Buddies — God's big bookshelf</title>
+<meta name="description" content="Bible Buddies: a narrated tap-and-learn Bible game for ages 2–6. Explore 89 books, heroes, lessons, counting, and story time — read out loud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#2f7fc4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%232f7fc4'/><text x='50' y='68' font-size='52' text-anchor='middle'>📖</text></svg>">
+<style>
+:root{
+  --night:#2b2260;        /* deep dusk sky */
+  --night-deep:#1d1747;
+  --moonmilk:#fff7e8;     /* warm cream text/cards */
+  --sun:#ffc84a;          /* gold */
+  --sprout:#59c98a;       /* green */
+  --berry:#ff7bac;        /* pink */
+  --sky:#59a8ff;          /* blue */
+  --violet:#a06bff;       /* purple */
+  --flame:#ff7b5c;        /* orange-red */
+  --ink:#3a2e6e;
+  --radius:28px;
+  --shadow:0 10px 0 rgba(0,0,0,.18);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Fredoka',sans-serif;
+  font-size:20px;
+  color:var(--moonmilk);
+  background:linear-gradient(180deg,#2f7fc4 0%,#54a4e3 34%,#9fd4ff 66%,#ffe9b8 100%);
+  overflow:hidden;
+  position:fixed; inset:0;
+  touch-action:manipulation;
+  user-select:none;-webkit-user-select:none;
+}
+h1,h2,h3{font-family:'Baloo 2',cursive;margin:0}
+
+/* ---------- ambient sky ---------- */
+#sky{position:fixed;inset:0;pointer-events:none;z-index:0}
+.tw{position:absolute;border-radius:50%;background:#fff8dd;opacity:.7;animation:twinkle 4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.9;transform:scale(1.15)}}
+#hill{position:fixed;left:-10%;right:-10%;bottom:-6vh;height:26vh;background:radial-gradient(120% 100% at 50% 0,#e3c07f 0,#cfa55d 60%,#b98d47 100%);border-radius:50% 50% 0 0;z-index:0;pointer-events:none}
+#hill:after{content:"🌾 🐑 🌿 🕊️ 🌾 🐪 🫒 🌾";position:absolute;top:14px;left:0;right:0;text-align:center;font-size:clamp(18px,4vw,30px);letter-spacing:2vw;filter:saturate(1.1)}
+#sun{position:fixed;top:4vh;right:6vw;width:min(16vw,110px);height:min(16vw,110px);border-radius:50%;background:radial-gradient(circle,#fff3c4 0%,#ffd76b 55%,rgba(255,215,107,0) 72%);box-shadow:0 0 60px 24px rgba(255,223,142,.55);z-index:0;pointer-events:none}
+.cloud{position:absolute;font-size:clamp(30px,6vw,54px);opacity:.9;animation:drift2 26s linear infinite}
+@keyframes drift2{from{transform:translateX(-15vw)}to{transform:translateX(115vw)}}
+.firefly{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--sun);box-shadow:0 0 12px 4px rgba(255,200,74,.55);animation:drift 9s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}25%{transform:translate(26px,-34px)}50%{transform:translate(-18px,-58px)}75%{transform:translate(20px,-22px)}}
+
+/* ---------- screens ---------- */
+.screen{position:fixed;inset:0;z-index:2;display:none;flex-direction:column;align-items:center;padding:max(14px,env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));overflow-y:auto;-webkit-overflow-scrolling:touch}
+.screen.on{display:flex;animation:pop-in .35s ease}
+@keyframes pop-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+
+/* ---------- top bar ---------- */
+.topbar{width:100%;max-width:760px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.chip{background:rgba(255,247,232,.14);border:2px solid rgba(255,247,232,.35);border-radius:999px;padding:8px 14px;font-weight:600;font-size:17px;display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px)}
+.iconbtn{border:none;cursor:pointer;background:var(--moonmilk);color:var(--ink);width:56px;height:56px;min-width:56px;border-radius:20px;font-size:26px;box-shadow:var(--shadow);display:grid;place-items:center;transition:transform .12s}
+.iconbtn:active{transform:translateY(4px);box-shadow:0 4px 0 rgba(0,0,0,.18)}
+.spacer{flex:1}
+#starChip{background:linear-gradient(135deg,#ffdf8e,#ffc84a);color:#5c3d00;border-color:#fff2c4;font-family:'Baloo 2';font-size:19px}
+
+/* ---------- big friendly buttons ---------- */
+.big-btn{
+  border:none;cursor:pointer;font-family:'Baloo 2',cursive;font-weight:800;
+  font-size:clamp(22px,5.5vw,30px);color:#fff;padding:20px 34px;border-radius:var(--radius);
+  background:linear-gradient(180deg,var(--sprout),#3fae72);
+  box-shadow:var(--shadow), inset 0 3px 0 rgba(255,255,255,.35);
+  transition:transform .12s; letter-spacing:.5px; min-height:72px;
+}
+.big-btn:active{transform:translateY(5px);box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.big-btn.gold{background:linear-gradient(180deg,#ffd76b,#f5a623);color:#5c3d00}
+.big-btn.berry{background:linear-gradient(180deg,#ff9cc0,#f05a92)}
+.big-btn.ghost{background:rgba(255,247,232,.14);border:3px dashed rgba(255,247,232,.5);box-shadow:none;color:var(--moonmilk)}
+
+/* ---------- splash ---------- */
+#scr-splash{justify-content:flex-start;text-align:center}
+#splashInner{margin:auto;display:flex;flex-direction:column;align-items:center;gap:min(10px,1.4vh)}
+#scr-splash h1{font-size:clamp(34px,min(11vw,9.5vh),80px);line-height:1.02;
+  background:linear-gradient(90deg,#ff8a8a,#ffc84a,#7ee2a8,#7fc2ff,#c9a1ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 0 rgba(0,0,0,.25));}
+#scr-splash .sub{font-size:clamp(16px,min(4.5vw,3vh),24px);opacity:.9;max-width:28ch;margin:0 auto}
+.splash-kid{width:min(46vw,32vh,220px);margin:2px auto -4px;animation:float 4s ease-in-out infinite}
+.splash-kid .bodybox{width:100%}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ---------- profiles ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;width:100%;max-width:640px;margin:10px 0 16px}
+.pcard{background:var(--moonmilk);color:var(--ink);border-radius:26px;padding:16px 8px 12px;text-align:center;cursor:pointer;border:5px solid transparent;box-shadow:var(--shadow);transition:transform .12s}
+.pcard:active{transform:scale(.96)}
+.pcard .face{font-size:56px;line-height:1}
+.pcard .pname{font-family:'Baloo 2';font-weight:800;font-size:20px;margin-top:6px}
+.pcard .pstars{font-size:15px;color:#8a7bbf;font-weight:600}
+.pcard.sel{border-color:var(--sun);background:#fffdf3;transform:scale(1.04)}
+.pcard.new{background:rgba(255,247,232,.12);color:var(--moonmilk);border:3px dashed rgba(255,247,232,.55);box-shadow:none}
+
+/* new friend form */
+.avgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;max-width:460px;margin:12px 0}
+.av{font-size:46px;background:var(--moonmilk);border-radius:22px;padding:12px 0;text-align:center;cursor:pointer;border:5px solid transparent;box-shadow:var(--shadow)}
+.av.sel{border-color:var(--sun);transform:scale(1.08)}
+#nameIn{font-family:'Baloo 2';font-weight:700;font-size:26px;text-align:center;border:none;border-radius:20px;padding:14px;width:min(92%,440px);color:var(--ink);outline:4px solid transparent}
+#nameIn:focus{outline-color:var(--sun)}
+
+/* ---------- world map ---------- */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;width:100%;max-width:720px;margin-top:6px;padding-bottom:8px}
+.world{border:none;cursor:pointer;border-radius:30px;padding:18px 10px 14px;text-align:center;color:#fff;font-family:'Baloo 2';box-shadow:var(--shadow), inset 0 4px 0 rgba(255,255,255,.28);transition:transform .12s;position:relative}
+.world:active{transform:translateY(5px)}
+.world .wemoji{font-size:54px;line-height:1;display:block;filter:drop-shadow(0 3px 2px rgba(0,0,0,.25))}
+.world .wname{font-weight:800;font-size:21px;display:block;margin-top:8px;line-height:1.1}
+.world .wlvl{display:inline-block;margin-top:8px;background:rgba(0,0,0,.22);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700}
+.w-rainbow{background:linear-gradient(160deg,#ff8a8a,#f5576c)}
+.w-colors{background:linear-gradient(160deg,#ffd76b,#f59e23);color:#5c3d00}
+.w-colors .wlvl{background:rgba(92,61,0,.18)}
+.w-garden{background:linear-gradient(160deg,#7ee2a8,#2f9e63)}
+.w-energy{background:linear-gradient(160deg,#7fc2ff,#3a7bd5)}
+.w-space{background:linear-gradient(160deg,#6b5ce7,#3d2f8f)}
+.w-story{background:linear-gradient(160deg,#ff9cc0,#e2568f)}
+.shcount{font-size:14px;font-weight:700;opacity:.85;margin-top:4px}
+.bookgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;width:100%}
+.bookcard{position:relative;border:none;cursor:pointer;background:var(--moonmilk);color:var(--ink);border-radius:18px;padding:12px 6px;font-family:'Baloo 2';font-weight:700;font-size:15px;line-height:1.15;box-shadow:0 5px 0 rgba(0,0,0,.15);transition:transform .12s}
+.bookcard:active{transform:scale(.94)}
+.bookcard .be{display:block;font-size:32px;line-height:1.1}
+.bookcard.read{background:#eafbe9}
+.bookcard.read:after{content:"✓";position:absolute;top:4px;right:8px;color:#2f9e63;font-weight:800;font-size:16px}
+.countrow{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:clamp(30px,8vw,46px);max-width:480px;margin:2px 0 14px;filter:drop-shadow(0 3px 2px rgba(0,0,0,.2))}
+.opt.txt{font-size:clamp(16px,4.2vw,21px);min-height:96px}
+.world.wiggle{animation:wig .85s ease;box-shadow:0 0 0 6px rgba(255,217,61,.85), var(--shadow)}
+@keyframes wig{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-4deg) scale(1.08)}50%{transform:rotate(4deg) scale(1.1)}80%{transform:rotate(-2deg) scale(1.05)}}
+
+/* ---------- game shared ---------- */
+.gamewrap{width:100%;max-width:640px;display:flex;flex-direction:column;align-items:center;flex:1}
+.prompt{font-family:'Baloo 2';font-weight:800;font-size:clamp(24px,6vw,34px);text-align:center;line-height:1.2;margin:6px 0 14px;text-shadow:0 3px 0 rgba(21,55,102,.45);max-width:22ch}
+.turnchip{font-family:'Baloo 2';font-weight:800;font-size:19px;background:var(--moonmilk);color:var(--ink);border-radius:999px;padding:8px 20px;box-shadow:var(--shadow);margin-bottom:6px;display:none;align-items:center;gap:8px}
+.ogrid{display:grid;gap:16px;width:100%;grid-template-columns:repeat(2,1fr)}
+.ogrid.one{grid-template-columns:1fr;max-width:380px}
+.opt{border:none;cursor:pointer;border-radius:26px;min-height:120px;padding:14px 10px;font-family:'Baloo 2';font-weight:800;font-size:clamp(19px,4.6vw,26px);color:#fff;box-shadow:var(--shadow), inset 0 4px 0 rgba(255,255,255,.3);transition:transform .12s;line-height:1.15}
+.opt:active{transform:scale(.96)}
+.opt .oemoji{display:block;font-size:52px;line-height:1.1;filter:drop-shadow(0 3px 2px rgba(0,0,0,.25))}
+.opt.right{animation:party .7s ease}
+.opt.wrong{animation:shake .5s ease}
+.opt.dim{opacity:.35;pointer-events:none}
+@keyframes party{0%{transform:scale(1)}30%{transform:scale(1.15) rotate(-3deg)}60%{transform:scale(1.08) rotate(3deg)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+.feedback{min-height:44px;font-family:'Baloo 2';font-weight:800;font-size:24px;margin-top:14px;text-align:center}
+
+/* baskets (garden sort) */
+.sortitem{font-size:min(26vw,120px);line-height:1;margin:4px 0 10px;animation:float 3s ease-in-out infinite;filter:drop-shadow(0 6px 4px rgba(0,0,0,.3))}
+.baskets{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.basket{border:none;cursor:pointer;border-radius:26px;padding:18px 8px;font-family:'Baloo 2';font-weight:800;font-size:clamp(19px,4.6vw,25px);color:#fff;box-shadow:var(--shadow), inset 0 4px 0 rgba(255,255,255,.3);transition:transform .12s}
+.basket:active{transform:scale(.96)}
+.basket .oemoji{display:block;font-size:48px}
+.b-sun{background:linear-gradient(180deg,#ffd76b,#f5a623);color:#5c3d00}
+.b-earth{background:linear-gradient(180deg,#b98a5f,#8a5a35)}
+.b-yes{background:linear-gradient(180deg,#7ee2a8,#2f9e63)}
+.b-ask{background:linear-gradient(180deg,#ff9cc0,#e2568f)}
+
+/* body figure (rainbow world + energy world) */
+.bodybox{width:min(78vw,320px);margin:0 auto}
+.cdot{cursor:pointer}
+.cdot circle{transition:transform .15s;transform-origin:center;transform-box:fill-box}
+.cdot:active circle{transform:scale(1.3)}
+.cdot .halo{animation:halo 2s ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.25}50%{opacity:.75}}
+.tracedot{cursor:pointer;font-family:'Baloo 2';font-weight:800}
+.tracedot.done circle{fill:var(--sun)}
+
+/* breathing star */
+#breathStar{font-size:110px;display:block;text-align:center;transition:transform 3.6s ease-in-out, filter 3.6s ease-in-out;filter:drop-shadow(0 0 18px rgba(255,200,74,.8))}
+#breathStar.in{transform:scale(1.7)}
+#breathStar.out{transform:scale(1)}
+
+/* story */
+.storypage{background:var(--moonmilk);color:var(--ink);border-radius:32px;box-shadow:var(--shadow);padding:22px 20px;width:100%;max-width:560px;text-align:center;margin-top:6px}
+.storypage .scene{font-size:min(17vw,86px);line-height:1.15;letter-spacing:6px}
+.storypage .stext{font-family:'Baloo 2';font-weight:700;font-size:clamp(20px,5vw,26px);line-height:1.5;margin-top:12px;min-height:3.6em}
+.stext .w{display:inline-block;border-radius:8px;padding:0 3px;transition:background .12s, transform .12s}
+.stext .w.on{background:#ffd93d;transform:translateY(-3px) scale(1.1)}
+.dots{display:flex;gap:8px;justify-content:center;margin:14px 0 6px}
+.dots i{width:12px;height:12px;border-radius:50%;background:rgba(255,247,232,.3)}
+.dots i.on{background:var(--sun)}
+
+/* celebration overlay */
+#cheer{position:fixed;inset:0;z-index:50;display:none;place-items:center;background:rgba(29,23,71,.55);backdrop-filter:blur(3px)}
+#cheer.on{display:grid}
+#cheerCard{background:var(--moonmilk);color:var(--ink);border-radius:36px;padding:30px 26px;text-align:center;box-shadow:var(--shadow);max-width:min(88vw,420px);animation:pop-in .35s ease}
+#cheerCard .cbig{font-size:76px;line-height:1}
+#cheerCard h2{font-size:32px;margin:8px 0 4px}
+#cheerCard p{margin:0 0 16px;font-weight:500;color:#6a5aa0;font-size:19px}
+.confetti{position:fixed;top:-4vh;font-size:26px;z-index:51;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(112vh) rotate(720deg)}}
+
+/* grown-ups panel */
+.panel{background:var(--moonmilk);color:var(--ink);border-radius:30px;box-shadow:var(--shadow);padding:22px;width:100%;max-width:560px}
+.panel h2{font-size:26px;margin-bottom:8px}
+.panel p{font-size:17px;line-height:1.5;font-family:'Fredoka';font-weight:400;margin:8px 0}
+.setrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:2px dashed #e4dcf5;font-weight:600;font-size:18px}
+.toggle{margin-left:auto;width:64px;height:36px;border-radius:999px;background:#d8cff0;border:none;cursor:pointer;position:relative;transition:background .2s}
+.toggle:before{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 2px 4px rgba(0,0,0,.25)}
+.toggle.on{background:var(--sprout)}
+.toggle.on:before{left:32px}
+.linky{background:none;border:none;color:#7a5fd0;font-weight:700;font-size:17px;cursor:pointer;text-decoration:underline;font-family:'Fredoka'}
+
+.footnote{opacity:.65;font-size:14px;margin-top:14px;text-align:center;max-width:40ch}
+@media (min-width:700px){ .ogrid{gap:20px} .opt{min-height:140px} }
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="sky"></div>
+<div id="sun"></div>
+<div id="hill"></div>
+
+<!-- SPLASH -->
+<section class="screen on" id="scr-splash">
+  <div id="splashInner">
+    <h1>Bible Buddies</h1>
+    <p class="sub">God’s giant bookshelf — 89 books of stories &amp; songs 📚</p>
+    <div class="splash-kid" id="splashKid"></div>
+    <button class="big-btn gold" id="btnStart">▶ &nbsp;Tap to play!</button>
+    <p class="footnote" style="margin-top:4px">Made with love by Boundless · sound on 🔊 · v1.0</p>
+  </div>
+</section>
+
+<!-- WHO'S PLAYING -->
+<section class="screen" id="scr-who">
+  <h2 style="font-size:clamp(28px,7vw,40px);text-shadow:0 3px 0 rgba(21,55,102,.45)">Who is playing? 👋</h2>
+  <p style="opacity:.85;margin:6px 0 0;text-align:center">Tap your friend! Tap more than one to play together.</p>
+  <div class="pgrid" id="pgrid"></div>
+  <button class="big-btn gold" id="btnGo" style="display:none">Let's play! 🎉</button>
+  <button class="linky" id="btnGrown1" style="color:#fff7e8;opacity:.7;margin-top:14px">for grown-ups</button>
+</section>
+
+<!-- NEW FRIEND -->
+<section class="screen" id="scr-new">
+  <h2 style="font-size:clamp(26px,7vw,36px);text-shadow:0 3px 0 rgba(21,55,102,.45)">Pick your animal! 🐾</h2>
+  <div class="avgrid" id="avgrid"></div>
+  <input id="nameIn" maxlength="12" placeholder="Type a name (optional)">
+  <div style="display:flex;gap:12px;margin-top:16px">
+    <button class="big-btn ghost" id="btnNewBack">← Back</button>
+    <button class="big-btn gold" id="btnNewSave">All done! ✔</button>
+  </div>
+</section>
+
+<!-- WORLD MAP -->
+<section class="screen" id="scr-map">
+  <div class="topbar">
+    <button class="iconbtn" id="btnHome" aria-label="Change players">🏡</button>
+    <div class="chip" id="playerChip"></div>
+    <div class="spacer"></div>
+    <div class="chip" id="starChip">⭐ 0</div>
+    <button class="iconbtn" id="btnGrown2" aria-label="Grown-ups">⚙️</button>
+  </div>
+  <h2 style="font-size:clamp(24px,6vw,34px);text-shadow:0 3px 0 rgba(21,55,102,.45);margin:4px 0 8px">Pick a world! 🌈</h2>
+  <div class="wgrid" id="wgrid"></div>
+  <button class="iconbtn" id="btnMic" style="margin-top:14px;display:none" aria-label="Talk to me">🎤</button>
+</section>
+
+<!-- GAME (generic quiz / sort / bodytap) -->
+<section class="screen" id="scr-game">
+  <div class="topbar">
+    <button class="iconbtn" id="btnBack1" aria-label="Back to map">🗺️</button>
+    <div class="chip" id="gLvl"></div>
+    <div class="spacer"></div>
+    <div class="chip" id="gStars">⭐ 0</div>
+    <button class="iconbtn" id="btnSay1" aria-label="Say it again">🔊</button>
+  </div>
+  <div class="gamewrap">
+    <div class="turnchip" id="turnChip"></div>
+    <div class="prompt" id="gPrompt"></div>
+    <div id="gStage" style="width:100%;display:flex;flex-direction:column;align-items:center"></div>
+    <div class="feedback" id="gFeed"></div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="screen" id="scr-story">
+  <div class="topbar">
+    <button class="iconbtn" id="btnBack2" aria-label="Back">🗺️</button>
+    <div class="spacer"></div>
+    <button class="iconbtn" id="btnSay2" aria-label="Read it again">🔊</button>
+  </div>
+  <div class="gamewrap" id="storyWrap"></div>
+</section>
+
+<!-- GROWN-UPS -->
+<section class="screen" id="scr-grown">
+  <div class="topbar">
+    <button class="iconbtn" id="btnBack3" aria-label="Back">←</button>
+    <div class="spacer"></div>
+  </div>
+  <div class="panel">
+    <h2>For grown-ups 🧑‍🤝‍🧑</h2>
+    <p><b>Bible Buddies</b> is a narrated tap-and-learn Bible game for ages 2–6: a tappable bookshelf of 89 books (each with a one-line summary, a hero, and a lesson), counting games, hero and which-book quizzes, heart-lesson matching, and 8 read-aloud stories with bouncing words. Every prompt is read out loud, so pre-readers can play on their own.</p>
+    <p><b>Progress</b> saves on this device automatically — each child picks their animal and picks up where they left off. Levels adjust up and down on their own as your child answers.</p>
+    <p><b>About the 89 books:</b> this shelf merges the Hebrew Bible (Tanakh), the Apocrypha / Deuterocanonical books, and the Ethiopian Orthodox Tewahedo broader canon — traditionally counted as 81 books, the largest Bible canon in the world. Counting every named book separately (traditions group some together), the merged shelf holds 89. Summaries are simplified and kept gentle for little ones.</p>
+    <div class="setrow">🔊 Read everything out loud <button class="toggle on" id="tgVoice"></button></div>
+    <div class="setrow">🎤 Voice commands (say "home", "again", or an answer) <button class="toggle" id="tgMic"></button></div>
+    <div class="setrow">✨ Extra sparkles &amp; motion <button class="toggle on" id="tgFx"></button></div>
+    <div class="setrow"><button class="linky" id="btnReset">Erase all players &amp; progress</button></div>
+    <p class="footnote" style="margin:14px auto 0">Built by Boundless · boundless.mbf@gmail.com</p>
+  </div>
+</section>
+
+<!-- CHEER OVERLAY -->
+<div id="cheer"><div id="cheerCard">
+  <div class="cbig" id="cheerEmoji">🌟</div>
+  <h2 id="cheerTitle">Yay!</h2>
+  <p id="cheerText"></p>
+  <button class="big-btn gold" id="cheerBtn">Keep going! →</button>
+</div></div>
+
+<script>
+/* ============================================================
+   LITTLE LIGHTS — a Boundless learning garden (ages 2–6)
+   Single-file game. Progress saves in this browser.
+   ============================================================ */
+
+/* ---------------- DATA ---------------- */
+const AVATARS=['🐰','🦊','🐻','🐸','🦄','🐯','🐧','🐙'];
+const SHELVES=[
+ {name:'Law shelf',emoji:'📜',hex:'#d95757',dark:'#a33232',books:[
+  ['Genesis','🌍','God makes the whole world, and every animal and person.','Adam & Eve','God made everything, and it is good.'],
+  ['Exodus','🌊','Moses leads God\u2019s people out of Egypt — the sea opens up!','Moses','God makes a way.'],
+  ['Leviticus','🕊️','Special rules that teach the people to live clean and kind.','Moses','Living God\u2019s way is good for us.'],
+  ['Numbers','🏕️','God\u2019s people camp and march through the big desert.','Moses','God stays with us on long journeys.'],
+  ['Deuteronomy','❤️','Moses says: remember God\u2019s rules and love Him with all your heart.','Moses','Love God with all your heart.']]},
+ {name:'Story shelf',emoji:'🏰',hex:'#e67e22',dark:'#b05e12',books:[
+  ['Joshua','🎺','Trumpets blow and the big walls of Jericho fall down!','Joshua','Be brave — God is with you.'],
+  ['Judges','💪','Strong Samson and brave Deborah rescue God\u2019s people.','Samson & Deborah','God sends helpers.'],
+  ['Ruth','🌾','Ruth stays with Naomi and finds a brand-new family.','Ruth','Kindness makes a family.'],
+  ['1 Samuel','🎯','Little David trusts God and beats the giant Goliath.','David','With God, small can be mighty.'],
+  ['2 Samuel','👑','David becomes king and sings songs to God.','David','Say sorry when you make mistakes.'],
+  ['1 Kings','🏛️','Wise King Solomon builds a beautiful temple for God.','Solomon','Ask God for wisdom.'],
+  ['2 Kings','🔥','Elijah and Elisha do amazing things with God\u2019s help.','Elisha','God can do anything.'],
+  ['1 Chronicles','📖','The long, long story of God\u2019s big family, told again.','David','Every person matters to God.'],
+  ['2 Chronicles','🏰','Kings who follow God do well — kings who don\u2019t get in trouble.','Solomon','Following God is the best way.'],
+  ['Ezra','🧱','The people come home and build God\u2019s house again.','Ezra','It\u2019s never too late to start again.'],
+  ['Nehemiah','🧗','Nehemiah builds the city wall and everybody helps.','Nehemiah','Big jobs need teamwork.'],
+  ['Esther','👸','Brave Queen Esther speaks up and saves her people.','Esther','Be brave and speak up.']]},
+ {name:'Treasure shelf',emoji:'💎',hex:'#8e44ad',dark:'#683080',books:[
+  ['Tobit','🐟','Tobias travels with an angel and a happy dog — and a big fish!','Tobias & Raphael','God sends angels to help us.'],
+  ['Judith','⭐','Brave Judith saves her whole town with courage and prayer.','Judith','One brave person can save many.'],
+  ['1 Maccabees','🕎','A brave family protects God\u2019s temple, and the lamps shine again.','Judah Maccabee','Stand up for what is right.'],
+  ['2 Maccabees','🛡️','More stories of the brave Maccabee family trusting God.','Judah Maccabee','Never give up on what is right.'],
+  ['1 Meqabyan','🦁','An Ethiopian book about heroes who stay true to God.','The Meqabyan heroes','Stay true to God.'],
+  ['2 Meqabyan','🌅','More Ethiopian hero stories about turning back to God.','The Meqabyan heroes','God forgives when we turn back.'],
+  ['3 Meqabyan','☀️','Ethiopian songs and stories about how God helps the faithful.','The faithful','God helps those who trust Him.'],
+  ['Jubilees','🗓️','The world\u2019s story told in special sevens — God loves rest days.','Moses','Rest days are a gift.'],
+  ['Ezra Sutuel','🌠','Ezra asks God big questions and sees amazing dreams.','Ezra','It\u2019s okay to ask God big questions.']]},
+ {name:'Songs & Wisdom',emoji:'🎵',hex:'#e2568f',dark:'#b03a6b',books:[
+  ['Job','🌪️','Job loses everything but never stops talking to God.','Job','God is with us even on sad days.'],
+  ['Psalms','🎶','One hundred fifty songs to sing to God — happy ones and sad ones.','David','You can tell God anything.'],
+  ['Proverbs','🦉','Little sayings that make you wise.','Solomon','Wise words help us choose well.'],
+  ['Ecclesiastes','⏳','A wise teacher learns what really matters most.','The Teacher','Loving God matters most.'],
+  ['Song of Songs','🌹','A beautiful poem all about love.','Solomon','Love is beautiful.'],
+  ['Wisdom of Solomon','💡','Wisdom shines like a bright, friendly light.','Solomon','Choose wisdom.'],
+  ['Sirach','🍯','A grandpa\u2019s book of good advice for every single day.','Ben Sira','Good advice is sweet like honey.'],
+  ['Prayer of Manasseh','🙏','A king says a great big sorry to God — and God forgives him.','King Manasseh','Saying sorry makes things right.']]},
+ {name:'Big Prophets',emoji:'🔥',hex:'#16a085',dark:'#0e7562',books:[
+  ['Isaiah','🕊️','A prophet promises a Prince of Peace is coming.','Isaiah','God keeps His promises.'],
+  ['Jeremiah','😢','Jeremiah cries for the people but never stops hoping.','Jeremiah','God gives new hope.'],
+  ['Lamentations','🌧️','Sad songs after the city falls — but morning brings new mercy.','Jeremiah','God\u2019s love is new every morning.'],
+  ['Baruch','📜','Jeremiah\u2019s helper writes letters full of hope.','Baruch','Hope travels far.'],
+  ['4 Baruch','🦅','An eagle carries a letter of hope all the way home.','Baruch','Good news is worth waiting for.'],
+  ['Ezekiel','🌈','Ezekiel sees amazing pictures from God — even dry bones dance!','Ezekiel','God can make anything new.'],
+  ['Daniel','🦁','Daniel prays every day — even in the lions\u2019 den, God keeps him safe.','Daniel','Keep praying; God protects.'],
+  ['Enoch','🚶','Enoch walks so close with God that God takes him up to the sky.','Enoch','Walk close with God.']]},
+ {name:'Twelve Little Prophets',emoji:'🌟',hex:'#27ae60',dark:'#1d8347',books:[
+  ['Hosea','💗','God keeps loving His people, no matter what.','Hosea','God never stops loving.'],
+  ['Joel','🦗','After the hungry bugs, God promises to make everything better.','Joel','God makes things new.'],
+  ['Amos','⚖️','Be fair to everyone, says the shepherd prophet.','Amos','Fairness matters.'],
+  ['Obadiah','🏔️','The shortest prophet book: don\u2019t be mean when others fall down.','Obadiah','Don\u2019t laugh at others\u2019 troubles.'],
+  ['Jonah','🐋','Jonah runs away, a big fish swallows him, and he learns to obey.','Jonah','You can\u2019t run from God\u2019s love.'],
+  ['Micah','✨','Do what is right, love kindness, and walk humbly with God.','Micah','Be fair, kind, and humble.'],
+  ['Nahum','🌊','God is strong and keeps His people safe.','Nahum','God protects.'],
+  ['Habakkuk','🌄','Habakkuk asks God why — and learns to trust and sing.','Habakkuk','Trust God, even with big questions.'],
+  ['Zephaniah','🎉','God sings happy songs over His children!','Zephaniah','God delights in you.'],
+  ['Haggai','🔨','Time to build God\u2019s house — first things first!','Haggai','Put God first.'],
+  ['Zechariah','🐴','A gentle king will come riding on a little donkey.','Zechariah','God\u2019s king is gentle.'],
+  ['Malachi','📮','God\u2019s last letter before a long quiet time — get ready!','Malachi','Get your heart ready.']]},
+ {name:'Jesus shelf',emoji:'⭐',hex:'#2f6fd6',dark:'#1e4c99',books:[
+  ['Matthew','👑','Jesus is born — the promised King! Wise men follow the star.','Jesus','Jesus is the promised King.'],
+  ['Mark','🏃','Quick! Jesus helps people everywhere he goes.','Jesus','Jesus came to help.'],
+  ['Luke','💗','Jesus loves everyone — especially people others forget.','Jesus','Everyone matters to Jesus.'],
+  ['John','✨','Jesus is God\u2019s light and love for the whole world.','Jesus','God so loved the world.'],
+  ['Acts','🔥','Jesus\u2019 friends tell the good news everywhere!','Peter & Paul','Share good news.']]},
+ {name:'Letters shelf',emoji:'✉️',hex:'#5d6db5',dark:'#414e8c',books:[
+  ['Romans','💌','Paul writes: God\u2019s love is a free gift.','Paul','God\u2019s love is a gift.'],
+  ['1 Corinthians','💞','Love is patient, love is kind.','Paul','Love is the greatest.'],
+  ['2 Corinthians','🌱','God makes us strong when we feel weak.','Paul','God\u2019s power helps weak people.'],
+  ['Galatians','🕊️','God\u2019s children are free to love.','Paul','Love makes us free.'],
+  ['Ephesians','🛡️','Put on God\u2019s armor of love and truth.','Paul','God makes us one family.'],
+  ['Philippians','😊','Be joyful always — Paul sings even in jail!','Paul','Choose joy.'],
+  ['Colossians','🌞','Jesus is first in everything.','Paul','Keep Jesus first.'],
+  ['1 Thessalonians','⏰','Live ready and keep loving each other.','Paul','Keep loving, be ready.'],
+  ['2 Thessalonians','💪','Don\u2019t get tired of doing good.','Paul','Keep doing good.'],
+  ['1 Timothy','🧭','Paul teaches young Timothy how to lead with love.','Timothy','You\u2019re never too young to do good.'],
+  ['2 Timothy','🏅','Finish the race! Keep the faith.','Paul','Never give up.'],
+  ['Titus','🤝','Do good things that help everyone.','Titus','Good deeds shine.'],
+  ['Philemon','🤗','A little letter about forgiving and welcoming a friend.','Onesimus','Forgive and welcome.'],
+  ['Hebrews','⛰️','Jesus is the best — keep trusting Him.','The faithful','Faith keeps us going.'],
+  ['James','🍎','Don\u2019t just hear good words — do them!','James','Kind doing beats just saying.'],
+  ['1 Peter','💎','Be brave when things are hard; God cares for you.','Peter','Give God your worries.'],
+  ['2 Peter','🌅','Remember what is true and keep growing good.','Peter','Grow in goodness.'],
+  ['1 John','💕','Love one another, because God is love.','John','God is love.'],
+  ['2 John','🚪','Walk in truth and love.','John','Truth and love go together.'],
+  ['3 John','🏠','Be kind to visitors and helpers.','John','Welcome others.'],
+  ['Jude','⚓','Hold tight to what is true.','Jude','Hold on to truth.'],
+  ['Revelation','🌈','John\u2019s big dream: one day God makes everything new — no more tears!','John','God wins; all things will be made new.']]},
+ {name:'Church Helpers',emoji:'⛪',hex:'#8a5a35',dark:'#5f3c20',books:[
+  ['Sinodos: Order','📋','Old rules that helped the very first church families.','The apostles','Families need good rules.'],
+  ['Sinodos: Commands','📏','Wise commands for living together with love.','The apostles','Rules can be loving.'],
+  ['Sinodos: Decrees','🖋️','Careful decisions to keep the church family fair.','The apostles','Be fair to everyone.'],
+  ['Sinodos: Laws','🕯️','More guiding lights for God\u2019s big family.','The apostles','Good guides help us walk.'],
+  ['Covenant, Book 1','🤲','Promises and prayers for God\u2019s family.','The church family','God keeps His promises.'],
+  ['Covenant, Book 2','🌿','Teachings from Jesus for His friends after Easter.','Jesus','Jesus teaches His friends.'],
+  ['Ethiopic Clement','📬','A kind letter from a church helper named Clement.','Clement','Helpers keep the peace.'],
+  ['Ethiopic Didascalia','🗝️','A guidebook for the church\u2019s leaders.','The leaders','Good leaders serve.']]}
+];
+const BOOKS=[]; SHELVES.forEach((sh,si)=>sh.books.forEach((b,bi)=>BOOKS.push({shelf:si,n:b[0],e:b[1],s:b[2],h:b[3],l:b[4]})));
+const TOTAL_BOOKS=BOOKS.length; // 89
+
+const HEROES=[
+ {clue:'Who built the great big boat for all the animals?',who:'Noah',e:'🚢',tier:1},
+ {clue:'Who was swallowed by a great big fish?',who:'Jonah',e:'🐋',tier:1},
+ {clue:'Who was safe all night in the lions\u2019 den?',who:'Daniel',e:'🦁',tier:1},
+ {clue:'Which shepherd boy sang songs and beat a giant?',who:'David',e:'🐑',tier:1},
+ {clue:'Which baby floated in a basket on the river?',who:'Moses',e:'🧺',tier:1},
+ {clue:'Who is Jesus\u2019 mommy?',who:'Mary',e:'🌹',tier:1},
+ {clue:'Which baby was born in a manger in Bethlehem?',who:'Jesus',e:'⭐',tier:1},
+ {clue:'Which brave queen spoke up and saved her people?',who:'Esther',e:'👸',tier:2},
+ {clue:'Who stayed with Naomi and said, where you go, I go?',who:'Ruth',e:'🌾',tier:2},
+ {clue:'Who wore a beautiful coat of many colors?',who:'Joseph',e:'🧥',tier:2},
+ {clue:'Who was the strongest man, with long, long hair?',who:'Samson',e:'💪',tier:2},
+ {clue:'Which big sister watched the baby in the basket?',who:'Miriam',e:'👧',tier:2},
+ {clue:'Which prophet was fed by ravens and prayed down fire?',who:'Elijah',e:'🔥',tier:2},
+ {clue:'Which fisherman became Jesus\u2019 close friend?',who:'Peter',e:'🎣',tier:2},
+ {clue:'Which king asked God for wisdom?',who:'Solomon',e:'👑',tier:2},
+ {clue:'Who traveled with an angel, a dog, and a big fish?',who:'Tobias',e:'🐟',tier:3},
+ {clue:'Which brave lady saved her whole town?',who:'Judith',e:'⭐',tier:3},
+ {clue:'Who walked so close with God that God took him to the sky?',who:'Enoch',e:'🚶',tier:3},
+ {clue:'Whose brave family lit the temple lamps again?',who:'Judah Maccabee',e:'🕎',tier:3},
+ {clue:'Which brave judge led God\u2019s people under a palm tree?',who:'Deborah',e:'🌴',tier:3},
+ {clue:'Which queen rode camels far to visit wise Solomon?',who:'The Queen of Sheba',e:'🐪',tier:3},
+ {clue:'Who wrote lots and lots of letters to church families?',who:'Paul',e:'✉️',tier:3}
+];
+const WHICHBOOK=[
+ {clue:'God makes the world in this very first book.',book:'Genesis',e:'🌍',tier:1},
+ {clue:'The sea opens up so the people can walk through!',book:'Exodus',e:'🌊',tier:1},
+ {clue:'A big fish swallows a runaway prophet.',book:'Jonah',e:'🐋',tier:1},
+ {clue:'A man prays every day, even in a den of lions.',book:'Daniel',e:'🦁',tier:1},
+ {clue:'One hundred fifty songs to sing to God.',book:'Psalms',e:'🎶',tier:1},
+ {clue:'Trumpets blow and the big walls fall down.',book:'Joshua',e:'🎺',tier:2},
+ {clue:'A brave queen saves her people.',book:'Esther',e:'👸',tier:2},
+ {clue:'Baby Jesus is born and wise men follow the star.',book:'Matthew',e:'⭐',tier:2},
+ {clue:'Jesus\u2019 friends share the good news everywhere.',book:'Acts',e:'🔥',tier:2},
+ {clue:'Love is patient, love is kind.',book:'1 Corinthians',e:'💞',tier:2},
+ {clue:'One day God makes everything new — no more tears!',book:'Revelation',e:'🌈',tier:2},
+ {clue:'A boy travels with an angel, a dog, and a big fish.',book:'Tobit',e:'🐟',tier:3},
+ {clue:'A brave family lights the temple lamps again.',book:'1 Maccabees',e:'🕎',tier:3},
+ {clue:'A man walks with God all the way up to the sky.',book:'Enoch',e:'🚶',tier:3},
+ {clue:'The world\u2019s story is told in special sevens.',book:'Jubilees',e:'🗓️',tier:3},
+ {clue:'A grandpa\u2019s advice, sweet like honey.',book:'Sirach',e:'🍯',tier:3},
+ {clue:'A king says a great big sorry to God.',book:'Prayer of Manasseh',e:'🙏',tier:3},
+ {clue:'A brave lady saves her whole town.',book:'Judith',e:'⭐',tier:3}
+];
+const LESSONS=[
+ {story:'Noah builds a boat, and God paints a rainbow.',e:'🌈',lesson:'God keeps His promises'},
+ {story:'A kind stranger stops to help a hurt traveler.',e:'🤕',lesson:'Be kind to everyone'},
+ {story:'Little David faces the giant Goliath.',e:'🎯',lesson:'With God, small is mighty'},
+ {story:'Jonah gets a second chance after the big fish.',e:'🐋',lesson:'Everyone gets a second chance'},
+ {story:'Ruth stays with Naomi no matter what.',e:'🌾',lesson:'Stay loyal to your family'},
+ {story:'Queen Esther speaks up to save her people.',e:'👸',lesson:'Be brave and speak up'},
+ {story:'The shepherd looks for his one lost sheep.',e:'🐑',lesson:'God looks for every one of us'},
+ {story:'A boy shares his loaves and fish, and everyone eats.',e:'🍞',lesson:'Share what you have'},
+ {story:'Daniel keeps praying, even when it is not allowed.',e:'🦁',lesson:'Keep praying every day'},
+ {story:'The lost son comes home, and his father runs to hug him.',e:'🤗',lesson:'God always welcomes us home'},
+ {story:'God makes the world and asks us to care for it.',e:'🌍',lesson:'Take care of God\u2019s world'},
+ {story:'An angel walks with Tobias on his long trip.',e:'😇',lesson:'Angels watch over us'},
+ {story:'King Manasseh says a great big sorry to God.',e:'🙏',lesson:'Saying sorry makes things right'}
+];
+const STORIES=[
+ {id:'creation',emoji:'🌍',title:'The Creation Song',pages:[
+   {s:'🌑✨',t:'In the very beginning, everything was dark and quiet. Then God said: Let there be light!'},
+   {s:'☀️🌙⭐',t:'God made the day and the night, the sun, the moon, and all the twinkly stars.'},
+   {s:'🌊🌴🌷',t:'God made the big blue sea, the tall trees, and every little flower.'},
+   {s:'🐠🐦🦁',t:'God made splashy fish, singing birds, and animals big and small.'},
+   {s:'👫🌍💚',t:'Then God made people, to love Him and to take care of the world.'},
+   {s:'😴🌈🙏',t:'On day seven, God rested. He looked at everything and smiled. It was very, very good.'}]},
+ {id:'noah',emoji:'🌈',title:'Noah and the Rainbow',pages:[
+   {s:'🔨🚢🐘',t:'God told Noah: Build a very big boat! So Noah built and built, and the animals came two by two.'},
+   {s:'🌧️🌧️🚢',t:'Then the rain came down. Drip, drop, splash! It rained for forty days and forty nights.'},
+   {s:'🚢🌊🐒',t:'The big boat floated safe on the water, with Noah and all the animals cozy inside.'},
+   {s:'🕊️🌿☀️',t:'Noah sent out a dove, and she came back with a green leaf. The water was going away!'},
+   {s:'🚢⛰️🐾',t:'The boat rested on a mountain, and out marched all the animals. Stretch those legs!'},
+   {s:'🌈🙏💛',t:'God painted a rainbow in the sky and promised to always care for us. Every rainbow says: God keeps His promises.'}]},
+ {id:'moses',emoji:'🧺',title:'Baby Moses in the Basket',pages:[
+   {s:'👶🧺🌊',t:'A mommy hid her baby, Moses, in a little basket boat on the river to keep him safe.'},
+   {s:'👧🌾👀',t:'His big sister Miriam watched from the tall, tall grass. Shhh!'},
+   {s:'👸💧🧺',t:'A princess found the basket. Oh, what a sweet baby! she said.'},
+   {s:'👧🏃🤱',t:'Quick as a bunny, Miriam ran up. I know someone who can help! It was their very own mommy.'},
+   {s:'👶🏰💪',t:'Moses grew up big and strong, and God had a very big job just for him.'},
+   {s:'🌊✨🙏',t:'One day Moses would lead God\u2019s people to freedom. God watches over little ones with big plans.'}]},
+ {id:'david',emoji:'🐑',title:'David the Shepherd Boy',pages:[
+   {s:'🐑🎶👦',t:'David was a little shepherd boy who sang songs to God while he watched his sheep.'},
+   {s:'🐻🦁💪',t:'When wild animals came near, brave David kept his sheep safe. God made him strong.'},
+   {s:'😠🏔️📣',t:'One day a giant named Goliath shouted mean things at God\u2019s people. Everyone was scared.'},
+   {s:'👦🙏✨',t:'But David said: God is with me! He picked up his sling and five smooth stones.'},
+   {s:'💫🎯😮',t:'Whoosh went the sling — and down went the giant! Everyone cheered.'},
+   {s:'👑🎶💛',t:'David grew up to be a great king who wrote songs we still sing. With God, even small people can do big things.'}]},
+ {id:'jonah',emoji:'🐋',title:'Jonah and the Big Fish',pages:[
+   {s:'🗣️➡️🏙️',t:'God said: Jonah, go to the big city and tell the people to be kind. But Jonah said: No, thank you!'},
+   {s:'⛵🌊🏃',t:'Jonah ran away on a boat. But a big storm came. Whoosh! Splash!'},
+   {s:'🌊🐋😮',t:'Jonah fell into the sea, and a great big fish swallowed him whole. Gulp!'},
+   {s:'🐋🙏💭',t:'Inside the fish it was dark and quiet. Jonah prayed: I am sorry, God. I will obey.'},
+   {s:'🐋💨🏖️',t:'The fish put Jonah right back on the beach. Off he ran to the city!'},
+   {s:'🏙️💛🌈',t:'The people listened and changed their ways, and God forgave them all. Everyone gets a second chance.'}]},
+ {id:'tobias',emoji:'🐟',title:'Tobias, the Angel, and the Dog',pages:[
+   {s:'👴💰🗺️',t:'Old Tobit sent his son Tobias on a long trip to fetch some family treasure.'},
+   {s:'🚶😇🐕',t:'A kind helper named Raphael came along, and so did a happy little dog. Off they went!'},
+   {s:'🌊🐟😲',t:'At the river, a big fish jumped up. Catch it, said Raphael. It will help us!'},
+   {s:'💒💗🎉',t:'On the way, Tobias met Sarah, and they got married. What a happy day!'},
+   {s:'🏠👴✨',t:'Back home, the special fish medicine helped old Tobit\u2019s eyes see again. Hooray!'},
+   {s:'😇🕊️💛',t:'Then Raphael smiled: I am an angel God sent to help you. God sends helpers to watch over us.'}]},
+ {id:'daniel',emoji:'🦁',title:'Daniel and the Lions',pages:[
+   {s:'🙏🪟☀️',t:'Daniel loved God and prayed by his window three times every day.'},
+   {s:'😠📜👑',t:'Some grumpy men made a rule: No praying! But Daniel kept praying anyway.'},
+   {s:'🦁🕳️😟',t:'So Daniel was put in a den full of hungry lions. Oh no!'},
+   {s:'😇🦁💤',t:'But God sent an angel who closed the lions\u2019 mouths. The lions just yawned and slept.'},
+   {s:'🌅👑😃',t:'In the morning the king called: Daniel, are you safe? Yes! God kept me safe all night!'},
+   {s:'🦁💛🙏',t:'Everyone learned how strong God is. Keep praying every day, just like Daniel.'}]},
+ {id:'star',emoji:'⭐',title:'The Night the Star Shone',pages:[
+   {s:'🤱👶🌟',t:'In a little town called Bethlehem, baby Jesus was born. Mary wrapped him up warm.'},
+   {s:'🐄🐑🛏️',t:'His first bed was a manger, a soft hay box, with gentle animals all around.'},
+   {s:'🐑🌟😇',t:'Angels sang to shepherds on the hills: Good news! A Savior is born tonight!'},
+   {s:'🏃🐑👶',t:'The shepherds hurried to see the baby, and their hearts filled up with joy.'},
+   {s:'⭐🐪🎁',t:'Far away, wise men followed a bright star and brought the baby wonderful gifts.'},
+   {s:'🌟💛🌍',t:'That little baby was God\u2019s best gift of love for the whole wide world.'}]}
+];
+const WORLDS=[
+ {id:'shelf',    name:'Big Bookshelf', emoji:'📚',cls:'w-rainbow'},
+ {id:'count',    name:'Count the Books',emoji:'🔢',cls:'w-colors'},
+ {id:'heroes',   name:'Bible Heroes',  emoji:'🦸',cls:'w-garden'},
+ {id:'whichbook',name:'Which Book?',   emoji:'🔍',cls:'w-energy'},
+ {id:'lessons',  name:'Heart Lessons', emoji:'💛',cls:'w-space'},
+ {id:'story',    name:'Story Time',    emoji:'📖',cls:'w-story'}
+];
+const PRAISE=['Yay! You did it!','Amazing!','Super smart!','Wow, great job!','You are a star!','High five!','Beautiful!'];
+const OOPS=['Almost! Try again!','Good try! One more time!','So close! Look again!'];
+
+/* ---------------- STATE & STORAGE ---------------- */
+const SAVE_KEY='bibleBuddies.v1';
+let DB={players:[],settings:{voice:true,mic:false,fx:true}};
+let mem=null;
+function load(){ try{const raw=localStorage.getItem(SAVE_KEY); if(raw) DB=JSON.parse(raw);}catch(e){ if(mem) DB=mem; } }
+function save(){ mem=DB; try{localStorage.setItem(SAVE_KEY,JSON.stringify(DB));}catch(e){} }
+function newPlayer(name,av){ return {name,av,stars:0,prog:{}}; }
+function prog(p,world){ if(!p.prog[world]) p.prog[world]={lvl:1,streak:0,miss:0,done:0}; return p.prog[world]; }
+
+let party=[];      // selected players (1 = solo, 2+ = take turns)
+let turn=0;
+let curWorld=null;
+let editingNewName='';
+
+const $=id=>document.getElementById(id);
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on')); $(id).classList.add('on'); }
+
+/* ---------------- SPEECH (out loud) ---------------- */
+let voiceReady=false, pickedVoice=null;
+function pickVoice(){
+  const vs=speechSynthesis.getVoices();
+  if(!vs.length) return;
+  const en=vs.filter(v=>/^en/i.test(v.lang));
+  pickedVoice = en.find(v=>v.localService&&/female|zira|samantha|karen|jenny|aria|susan|hazel/i.test(v.name))
+             || en.find(v=>v.localService)
+             || en.find(v=>/female|zira|samantha|karen|jenny|aria|google us english/i.test(v.name))
+             || en[0] || vs[0];
+  voiceReady=true;
+}
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function say(text,opts={}){
+  if(!DB.settings.voice || !('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text.replace(/\p{Extended_Pictographic}/gu,'').replace(/\s+/g,' '));
+    if(pickedVoice) u.voice=pickedVoice;
+    u.rate=opts.rate||0.92; u.pitch=opts.pitch||1.15;
+    if(opts.onend) u.onend=opts.onend;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+let lastLine='';
+function narrate(text,opts){ lastLine=text; say(text,opts); }
+
+/* Read text aloud while bouncing each word (with a timing fallback
+   for browsers that don't report word boundaries, e.g. iOS Safari). */
+let karaokeStop=null;
+function narrateKaraoke(tokens,spans){
+  if(karaokeStop) karaokeStop();
+  const text=tokens.join(' ');
+  lastLine=text;
+  const offs=[]; let c=0; tokens.forEach(t=>{offs.push(c); c+=t.length+1;});
+  const hl=i=>spans.forEach((s,j)=>s.classList.toggle('on',j===i));
+  let timers=[]; let done=false;
+  const stop=()=>{ done=true; timers.forEach(clearTimeout); spans.forEach(s=>s.classList.remove('on')); karaokeStop=null; };
+  karaokeStop=stop;
+  const estimate=()=>{ // fallback: pace words by their length
+    let t=250;
+    tokens.forEach((tok,i)=>{ timers.push(setTimeout(()=>{ if(!done) hl(i); },t)); t+=170+tok.length*62; });
+    timers.push(setTimeout(()=>{ if(!done) stop(); },t+300));
+  };
+  // Words always move: start the length-paced bounce right away.
+  estimate();
+  if(!DB.settings.voice||!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    if(pickedVoice)u.voice=pickedVoice; u.rate=.88; u.pitch=1.15;
+    let gotBoundary=false;
+    u.onboundary=e=>{
+      if(e.name && e.name!=='word') return;
+      if(!gotBoundary){ gotBoundary=true; timers.forEach(clearTimeout); timers=[]; }
+      let i=0; for(let j=0;j<offs.length;j++){ if(e.charIndex>=offs[j]) i=j; else break; }
+      if(!done) hl(i);
+    };
+    u.onend=()=>{ if(!done&&gotBoundary) stop(); };
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ---------------- SOUND FX ---------------- */
+let AC=null;
+function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){} } return AC; }
+function tone(freq,dur,delay=0,type='sine',vol=.18){
+  const c=ac(); if(!c) return;
+  const o=c.createOscillator(),g=c.createGain();
+  o.type=type;o.frequency.value=freq;o.connect(g);g.connect(c.destination);
+  const t=c.currentTime+delay;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.start(t);o.stop(t+dur+.05);
+}
+const sfx={
+  tap(){tone(520,.09)},
+  yes(){tone(523,.12);tone(659,.12,.1);tone(784,.16,.2);tone(1047,.3,.32)},
+  no(){tone(220,.2,0,'triangle',.12)},
+  level(){[523,587,659,784,880,1047].forEach((f,i)=>tone(f,.12,i*.07))},
+  pop(){tone(880,.06,0,'square',.08)}
+};
+
+/* ---------------- SKY / CONFETTI ---------------- */
+(function sky(){
+  const s=$('sky');
+  for(let i=0;i<16;i++){const d=document.createElement('i');d.className='tw';
+    d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*45}%;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;animation-delay:${Math.random()*4}s`;
+    s.appendChild(d);}
+  for(let i=0;i<4;i++){const f=document.createElement('i');f.className='cloud';f.textContent='☁️';
+    f.style.cssText=`top:${4+Math.random()*32}%;animation-delay:${-Math.random()*26}s;animation-duration:${22+Math.random()*14}s`;
+    s.appendChild(f);}
+})();
+function confetti(n=26){
+  if(!DB.settings.fx) return;
+  const em=['🎉','⭐','🌟','✨','🌈','💛','💚','💙','💜'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div');c.className='confetti';
+    c.textContent=em[Math.floor(Math.random()*em.length)];
+    c.style.left=Math.random()*100+'vw';
+    c.style.animationDuration=(2+Math.random()*2)+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4200);
+  }
+}
+function cheer(emoji,title,text,btn,cb){
+  $('cheerEmoji').textContent=emoji;$('cheerTitle').textContent=title;$('cheerText').textContent=text;
+  $('cheerBtn').textContent=btn||'Keep going! →';
+  $('cheer').classList.add('on'); confetti(); sfx.level();
+  say(title+'. '+text);
+  $('cheerBtn').onclick=()=>{$('cheer').classList.remove('on'); if(cb)cb();};
+}
+
+/* ---------------- SVG ARK (splash art) ---------------- */
+function arkSVG(){
+  const w=document.createElement('div'); w.className='bodybox';
+  w.innerHTML=`<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <g fill="none" stroke-width="10" stroke-linecap="round">
+      <path d="M60 150 A 110 110 0 0 1 280 150" stroke="#ff5757"/>
+      <path d="M72 150 A 98 98 0 0 1 268 150" stroke="#ff9f43"/>
+      <path d="M84 150 A 86 86 0 0 1 256 150" stroke="#ffd93d"/>
+      <path d="M96 150 A 74 74 0 0 1 244 150" stroke="#6bcb77"/>
+      <path d="M108 150 A 62 62 0 0 1 232 150" stroke="#4d96ff"/>
+    </g>
+    <text x="52" y="120" font-size="34">🕊️</text>
+    <text x="112" y="164" font-size="36">🦒</text>
+    <text x="196" y="168" font-size="34">🐘</text>
+    <rect x="130" y="128" width="80" height="46" rx="8" fill="#fff7e8" stroke="#c69a63" stroke-width="4"/>
+    <path d="M122 132 L170 100 L218 132 Z" fill="#d95757" stroke="#a33232" stroke-width="4"/>
+    <circle cx="170" cy="151" r="11" fill="#9fd4ff" stroke="#c69a63" stroke-width="3"/>
+    <path d="M70 176 L270 176 L242 232 Q 170 246 98 232 Z" fill="#a9713f" stroke="#7d4f24" stroke-width="5"/>
+    <path d="M82 196 L258 196" stroke="#7d4f24" stroke-width="5" stroke-linecap="round"/>
+    <path d="M20 240 Q 60 222 100 240 T 180 240 T 260 240 T 340 240 L 340 300 L 0 300 Z" fill="#4d96ff" opacity=".85"/>
+    <path d="M0 258 Q 45 242 90 258 T 180 258 T 270 258 T 360 258 L 340 300 L 0 300 Z" fill="#2b6fd6" opacity=".9"/>
+  </svg>`;
+  return w;
+}
+/* ---------------- NAV & PROFILES ---------------- */
+$('btnStart').addEventListener('pointerdown',()=>{
+  ac(); // unlock audio on first tap
+  sfx.pop();
+  say('Hello! Welcome to Bible Buddies! Who is playing today?');
+  renderWho(); show('scr-who');
+});
+$('splashKid').appendChild(arkSVG());
+
+function renderWho(){
+  const g=$('pgrid'); g.innerHTML='';
+  DB.players.forEach((p,i)=>{
+    const c=document.createElement('div');c.className='pcard';
+    c.innerHTML=`<div class="face">${p.av}</div><div class="pname">${p.name}</div><div class="pstars">⭐ ${p.stars}</div>`;
+    c.addEventListener('pointerdown',()=>{
+      sfx.tap();
+      c.classList.toggle('sel');
+      const sel=[...g.querySelectorAll('.pcard.sel')];
+      $('btnGo').style.display = sel.length? 'inline-block':'none';
+      if(c.classList.contains('sel')) say(p.name+'!');
+    });
+    c.dataset.i=i; g.appendChild(c);
+  });
+  const add=document.createElement('div');add.className='pcard new';
+  add.innerHTML=`<div class="face">➕</div><div class="pname">New friend</div><div class="pstars">&nbsp;</div>`;
+  add.addEventListener('pointerdown',()=>{sfx.tap(); openNew();});
+  g.appendChild(add);
+  if(DB.players.length===0){ say('Tap the plus to make your very first friend!'); }
+}
+$('btnGo').addEventListener('pointerdown',()=>{
+  const sel=[...document.querySelectorAll('#pgrid .pcard.sel')].map(c=>DB.players[+c.dataset.i]);
+  if(!sel.length) return;
+  party=sel; turn=0; sfx.yes();
+  if(party.length>1) say('Yay! '+party.map(p=>p.name).join(' and ')+' are playing together! Take turns and be kind!');
+  openMap();
+});
+
+let newAv=null;
+function openNew(){
+  newAv=null; $('nameIn').value='';
+  const g=$('avgrid'); g.innerHTML='';
+  AVATARS.forEach(a=>{
+    const d=document.createElement('div');d.className='av';d.textContent=a;
+    d.addEventListener('pointerdown',()=>{
+      sfx.tap();
+      g.querySelectorAll('.av').forEach(x=>x.classList.remove('sel'));
+      d.classList.add('sel'); newAv=a;
+    });
+    g.appendChild(d);
+  });
+  say('Pick your animal! Then a grown-up can type your name.');
+  show('scr-new');
+}
+$('btnNewBack').addEventListener('pointerdown',()=>{renderWho();show('scr-who');});
+$('btnNewSave').addEventListener('pointerdown',()=>{
+  if(!newAv){ say('Tap an animal first!'); return; }
+  const name=($('nameIn').value.trim()||({'🐰':'Bunny','🦊':'Foxy','🐻':'Bear','🐸':'Froggy','🦄':'Sparkle','🐯':'Tiger','🐧':'Penguin','🐙':'Octo'})[newAv]);
+  DB.players.push(newPlayer(name,newAv)); save();
+  sfx.yes(); say('Hooray! Hello, '+name+'!');
+  renderWho(); show('scr-who');
+});
+
+/* ---------------- WORLD MAP ---------------- */
+function partyStars(){ return party.reduce((s,p)=>s+p.stars,0); }
+function openMap(){
+  curWorld=null;
+  $('playerChip').textContent = party.map(p=>p.av+' '+p.name).join('  ·  ');
+  $('starChip').textContent = '⭐ '+partyStars();
+  const g=$('wgrid'); g.innerHTML='';
+  WORLDS.forEach(w=>{
+    const lv = Math.max(...party.map(p=>prog(p,w.id).lvl));
+    const b=document.createElement('button');b.className='world '+w.cls;
+    const tag = w.id==='story' ? STORIES.length+' stories' : w.id==='shelf' ? TOTAL_BOOKS+' books' : 'Level '+lv;
+    b.innerHTML=`<span class="wemoji">${w.emoji}</span><span class="wname">${w.name}</span><span class="wlvl">${tag}</span>`;
+    b.addEventListener('pointerdown',()=>{sfx.tap(); startWorld(w.id);});
+    g.appendChild(b);
+  });
+  $('btnMic').style.display = (DB.settings.mic && SR)? 'grid':'none';
+  show('scr-map');
+  rollCall();
+}
+$('btnHome').addEventListener('pointerdown',()=>{sfx.tap();renderWho();show('scr-who');});
+function applyV(u,rate){ if(pickedVoice)u.voice=pickedVoice; u.rate=rate||.95; u.pitch=1.15; }
+function wiggleCard(c){ if(!c)return; c.classList.remove('wiggle'); void c.offsetWidth; c.classList.add('wiggle');
+  c.addEventListener('animationend',()=>c.classList.remove('wiggle'),{once:true}); }
+function rollCall(){
+  lastLine='Pick a world!';
+  const cards=[...document.querySelectorAll('#wgrid .world')];
+  if(!DB.settings.voice||!('speechSynthesis' in window)){
+    // no voice: still wiggle each card in turn so pre-readers can follow along
+    cards.forEach((c,i)=>setTimeout(()=>wiggleCard(c), 400+i*950));
+    return;
+  }
+  speechSynthesis.cancel();
+  const u0=new SpeechSynthesisUtterance('Pick a world!'); applyV(u0); speechSynthesis.speak(u0);
+  WORLDS.forEach((w,i)=>{
+    const u=new SpeechSynthesisUtterance(w.name); applyV(u);
+    u.onstart=()=>wiggleCard(cards[i]);
+    speechSynthesis.speak(u);
+  });
+}
+
+/* ---------------- GAME CORE (turns, stars, levels) ---------------- */
+function curPlayer(){ return party[turn%party.length]; }
+function nextTurn(){ if(party.length>1) turn++; }
+function showTurn(){
+  const t=$('turnChip');
+  if(party.length>1){ const p=curPlayer(); t.style.display='flex'; t.innerHTML=p.av+' '+p.name+'\u2019s turn!'; }
+  else t.style.display='none';
+}
+function award(p,world){
+  p.stars++; const pr=prog(p,world); pr.done++; pr.streak++; pr.miss=0; save();
+  $('gStars').textContent='⭐ '+partyStars();
+  // level up after 4 in a row
+  if(pr.streak>=4 && pr.lvl<3){
+    pr.lvl++; pr.streak=0; save();
+    cheer('🚀','Level up!','You are now on level '+pr.lvl+'! The game gets a little trickier — you can do it!','Let\u2019s go!',()=>nextQ());
+    return true;
+  }
+  // milestone every 10 total stars
+  if(p.stars%10===0){
+    cheer('🌟',p.name+' has '+p.stars+' stars!','What a bright little light you are!','Keep going!',()=>nextQ());
+    return true;
+  }
+  return false;
+}
+function miss(p,world){
+  const pr=prog(p,world); pr.streak=0; pr.miss++;
+  if(pr.miss>=3 && pr.lvl>1){ pr.lvl--; pr.miss=0; say('Let\u2019s try some easier ones together!'); }
+  save();
+}
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function pick(arr,n){ return shuffle(arr).slice(0,n); }
+function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+let nextQ=()=>{};
+let liveOptions=[]; // for voice answers: [{label, el}]
+function setGameChrome(worldId){
+  const p=curPlayer(), pr=prog(p,worldId);
+  $('gLvl').textContent='Level '+pr.lvl;
+  $('gStars').textContent='⭐ '+partyStars();
+  $('gFeed').textContent='';
+  showTurn();
+}
+function startWorld(id){
+  curWorld=id;
+  if(id==='story') return openStoryMenu();
+  if(id==='shelf') return openShelves();
+  show('scr-game');
+  nextQ = {count:qCount, heroes:qHeroes, whichbook:qWhich, lessons:qLessons}[id];
+  nextQ();
+}
+$('btnBack1').addEventListener('pointerdown',()=>{window.speechSynthesis&&speechSynthesis.cancel();openMap();});
+$('btnBack2').addEventListener('pointerdown',()=>{window.speechSynthesis&&speechSynthesis.cancel();if(karaokeStop)karaokeStop();storyReplay=null;openMap();});
+$('btnSay1').addEventListener('pointerdown',()=>say(lastLine));
+let storyReplay=null;
+$('btnSay2').addEventListener('pointerdown',()=>{ storyReplay?storyReplay():say(lastLine); });
+
+function optionCards(opts,onPick,cols){
+  const grid=document.createElement('div');grid.className='ogrid';
+  if(cols===1)grid.classList.add('one');
+  liveOptions=[];
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='opt';
+    b.style.background=`linear-gradient(180deg,${o.hex||'#8f7bd8'},${o.dark||'#6a55b5'})`;
+    b.innerHTML=(o.emoji?`<span class="oemoji">${o.emoji}</span>`:'')+(o.label||'');
+    b.addEventListener('pointerdown',()=>onPick(o,b));
+    liveOptions.push({label:(o.say||o.label||'').toLowerCase(),el:b});
+    grid.appendChild(b);
+  });
+  return grid;
+}
+function handleAnswer(correct,btn,worldId,explain){
+  const p=curPlayer();
+  if(correct){
+    sfx.yes(); btn.classList.add('right'); confetti(14);
+    $('gFeed').textContent=rand(PRAISE)+' ⭐';
+    const line=rand(PRAISE)+(explain?' '+explain:'');
+    say(line);
+    const paused=award(p,worldId);
+    nextTurn();
+    if(!paused) setTimeout(()=>nextQ(), 1900);
+  }else{
+    sfx.no(); btn.classList.add('wrong'); btn.classList.add('dim');
+    $('gFeed').textContent=rand(OOPS);
+    say(rand(OOPS));
+    miss(p,worldId);
+    setTimeout(()=>btn.classList.remove('wrong'),600);
+  }
+}
+
+/* ---------------- WORLD: BIG BOOKSHELF ---------------- */
+function shelfProg(p){ const pr=prog(p,'shelf'); if(!pr.exp) pr.exp={}; return pr; }
+function exploredCount(p){ return Object.keys(shelfProg(p).exp).length; }
+function openShelves(){
+  show('scr-game');
+  setGameChrome('shelf');
+  const p=curPlayer();
+  $('gLvl').textContent='📚 '+exploredCount(p)+' of '+TOTAL_BOOKS;
+  $('gPrompt').textContent='Pick a shelf!';
+  narrate('The big bookshelf has '+TOTAL_BOOKS+' books! Pick a shelf, then tap the books to hear their stories.');
+  const stage=$('gStage'); stage.innerHTML='';
+  const grid=document.createElement('div'); grid.className='ogrid';
+  liveOptions=[];
+  SHELVES.forEach((sh,i)=>{
+    const b=document.createElement('button'); b.className='opt';
+    b.style.background=`linear-gradient(180deg,${sh.hex},${sh.dark})`;
+    b.innerHTML=`<span class="oemoji">${sh.emoji}</span>${sh.name}<div class="shcount">${sh.books.length} books</div>`;
+    b.addEventListener('pointerdown',()=>{sfx.tap();openShelf(i);});
+    liveOptions.push({label:sh.name.toLowerCase(),el:b});
+    grid.appendChild(b);
+  });
+  stage.appendChild(grid);
+  nextQ=openShelves;
+}
+function openShelf(si){
+  setGameChrome('shelf');
+  const p=curPlayer(), sh=SHELVES[si], pr=shelfProg(p);
+  $('gLvl').textContent='📚 '+exploredCount(p)+' of '+TOTAL_BOOKS;
+  $('gPrompt').textContent=sh.emoji+' '+sh.name;
+  narrate('The '+sh.name+'! It has '+sh.books.length+' books. Tap a book to hear about it!');
+  const stage=$('gStage'); stage.innerHTML='';
+  const grid=document.createElement('div'); grid.className='bookgrid';
+  const base=BOOKS.findIndex(b=>b.shelf===si);
+  sh.books.forEach((bk,bi)=>{
+    const gi=base+bi;
+    const c=document.createElement('button'); c.className='bookcard'+(pr.exp[gi]?' read':'');
+    c.innerHTML=`<span class="be">${bk[1]}</span>${bk[0]}`;
+    c.addEventListener('pointerdown',()=>{sfx.tap();showBook(si,gi,bk);});
+    grid.appendChild(c);
+  });
+  stage.appendChild(grid);
+  const back=document.createElement('button'); back.className='big-btn ghost'; back.style.marginTop='16px';
+  back.textContent='← All shelves';
+  back.addEventListener('pointerdown',openShelves);
+  stage.appendChild(back);
+  nextQ=()=>openShelf(si);
+}
+function showBook(si,gi,bk){
+  const p=curPlayer(), pr=shelfProg(p);
+  const first=!pr.exp[gi];
+  if(first){ pr.exp[gi]=1; save(); }
+  const stage=$('gStage'); stage.innerHTML='';
+  $('gPrompt').textContent=bk[0];
+  const card=document.createElement('div'); card.className='storypage';
+  card.innerHTML=`<div class="scene">${bk[1]}</div>
+    <div class="stext">${bk[2]}<br><br><b>Hero:</b> ${bk[3]}<br><b>Lesson:</b> ${bk[4]}</div>`;
+  stage.appendChild(card);
+  narrate(bk[0]+'! '+bk[2]+' The hero is '+bk[3]+'. The lesson: '+bk[4]);
+  const back=document.createElement('button'); back.className='big-btn ghost'; back.style.marginTop='16px';
+  back.textContent='← More books';
+  back.addEventListener('pointerdown',()=>openShelf(si));
+  stage.appendChild(back);
+  const n=exploredCount(p);
+  $('gLvl').textContent='📚 '+n+' of '+TOTAL_BOOKS;
+  if(first){
+    p.stars++; save(); $('gStars').textContent='⭐ '+partyStars();
+    if(n===TOTAL_BOOKS) cheer('🏆','ALL '+TOTAL_BOOKS+' BOOKS!',p.name+' explored the whole bookshelf! Amazing!','Hooray!',()=>openShelves());
+    else if(n%10===0) cheer('📚',n+' books explored!','What a bookworm you are, '+p.name+'!','Keep reading!',()=>openShelf(si));
+    else confetti(8);
+  }
+}
+
+/* ---------------- WORLD: COUNT THE BOOKS ---------------- */
+const BOOK_EMOJIS=['📕','📗','📘','📙'];
+function bookRow(n){
+  const row=document.createElement('div'); row.className='countrow';
+  for(let i=0;i<n;i++){const sp=document.createElement('span');sp.textContent=BOOK_EMOJIS[i%4];row.appendChild(sp);}
+  return row;
+}
+function qCount(){
+  setGameChrome('count');
+  const p=curPlayer(), lvl=prog(p,'count').lvl;
+  const stage=$('gStage'); stage.innerHTML='';
+  if(lvl===1){
+    const n=2+Math.floor(Math.random()*4);
+    $('gPrompt').textContent='Count the books! How many?';
+    narrate('Count the books! How many do you see?');
+    stage.appendChild(bookRow(n));
+    const wrongN = (n>2 && Math.random()<.5)? n-1 : n+1;
+    const opts=shuffle([{label:''+n,ok:true},{label:''+wrongN,ok:false}])
+      .map(o=>({...o,say:o.label,hex:'#f5a623',dark:'#c17d0e'}));
+    stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'count',o.ok?'Yes! '+n+' books!':null)));
+  }else if(lvl===2){
+    const sh=rand(SHELVES.filter(x=>x.books.length<=12));
+    const n=sh.books.length;
+    $('gPrompt').textContent='How many books on the '+sh.name+'?';
+    narrate('Count with me! How many books are on the '+sh.name+'?');
+    stage.appendChild(bookRow(n));
+    const wrongs=shuffle([n-1,n+1,n+2].filter(x=>x>0)).slice(0,2);
+    const opts=shuffle([{label:''+n,ok:true},...wrongs.map(w=>({label:''+w,ok:false}))])
+      .map(o=>({...o,say:o.label,hex:'#f5a623',dark:'#c17d0e'}));
+    stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'count',o.ok?'Yes! The '+sh.name+' has '+n+' books!':null)));
+  }else{
+    if(Math.random()<.55){
+      const a=rand(SHELVES); let b2=rand(SHELVES); while(b2===a||b2.books.length===a.books.length) b2=rand(SHELVES);
+      const big=a.books.length>b2.books.length?a:b2;
+      $('gPrompt').textContent='Which shelf has MORE books?';
+      narrate('Which shelf has more books? The '+a.name+' has '+a.books.length+', and the '+b2.name+' has '+b2.books.length+'.');
+      const opts=shuffle([a,b2]).map(sh=>({emoji:sh.emoji,label:sh.name+' — '+sh.books.length,say:sh.name,hex:sh.hex,dark:sh.dark,ok:sh===big}));
+      stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'count',o.ok?'Yes! The '+big.name+' has '+big.books.length+' books — that is more!':null)));
+    }else{
+      $('gPrompt').textContent='How many books in the WHOLE bookshelf?';
+      narrate('The big question! How many books are in the whole Bible Buddies bookshelf?');
+      const opts=shuffle([{label:'89',ok:true},{label:'66',ok:false},{label:'75',ok:false},{label:'100',ok:false}])
+        .map(o=>({...o,say:o.label,emoji:'📚',hex:'#f5a623',dark:'#c17d0e'}));
+      stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'count',o.ok?'Eighty-nine books! One of the biggest Bibles in the whole world!':null)));
+    }
+  }
+}
+
+/* ---------------- WORLD: BIBLE HEROES ---------------- */
+function qHeroes(){
+  setGameChrome('heroes');
+  const p=curPlayer(), lvl=prog(p,'heroes').lvl;
+  const stage=$('gStage'); stage.innerHTML='';
+  const c=rand(HEROES.filter(h=>h.tier<=lvl));
+  const n=lvl+1;
+  $('gPrompt').textContent=c.clue;
+  narrate(c.clue);
+  const wrong=pick(HEROES.filter(h=>h.who!==c.who),n-1);
+  const opts=shuffle([c,...wrong]).map(h=>({emoji:h.e,label:h.who,say:h.who,hex:'#2f9e63',dark:'#1d6b41',ok:h.who===c.who}));
+  stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'heroes',o.ok?c.who+'! That’s right!':null)));
+}
+
+/* ---------------- WORLD: WHICH BOOK? ---------------- */
+function qWhich(){
+  setGameChrome('whichbook');
+  const p=curPlayer(), lvl=prog(p,'whichbook').lvl;
+  const stage=$('gStage'); stage.innerHTML='';
+  const c=rand(WHICHBOOK.filter(h=>h.tier<=lvl));
+  const n=lvl+1;
+  $('gPrompt').textContent=c.clue+' Which book is it in?';
+  narrate(c.clue+' Which book is that story in?');
+  const item=document.createElement('div'); item.className='sortitem'; item.textContent=c.e;
+  stage.appendChild(item);
+  const wrong=pick(WHICHBOOK.filter(h=>h.book!==c.book),n-1);
+  const opts=shuffle([c,...wrong]).map(h=>({label:h.book,say:h.book,hex:'#3a7bd5',dark:'#26538f',ok:h.book===c.book}));
+  stage.appendChild(optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'whichbook',o.ok?'Yes! That story is in the book of '+c.book+'!':null)));
+}
+
+/* ---------------- WORLD: HEART LESSONS ---------------- */
+function qLessons(){
+  setGameChrome('lessons');
+  const p=curPlayer(), lvl=prog(p,'lessons').lvl;
+  const n=Math.min(lvl+1,3);
+  const c=rand(LESSONS);
+  $('gPrompt').textContent=c.story;
+  narrate(c.story+' What does that story teach us?');
+  const stage=$('gStage'); stage.innerHTML='';
+  const item=document.createElement('div'); item.className='sortitem'; item.textContent=c.e;
+  stage.appendChild(item);
+  const wrong=pick(LESSONS.filter(l=>l!==c),n-1);
+  const opts=shuffle([c,...wrong]).map(l=>({label:l.lesson,say:l.lesson,hex:'#6b5ce7',dark:'#4634b0',ok:l===c}));
+  const grid=optionCards(opts,(o,b)=>handleAnswer(o.ok,b,'lessons',o.ok?'Yes! '+c.lesson+'.':null));
+  grid.querySelectorAll('.opt').forEach(o=>o.classList.add('txt'));
+  stage.appendChild(grid);
+}
+
+/* ---------------- WORLD: STORY TIME ---------------- */
+let storyIdx=0,pageIdx=0;
+function openStoryMenu(){
+  if(karaokeStop) karaokeStop();
+  storyReplay=null;
+  show('scr-game');
+  setGameChrome('story');
+  $('gLvl').textContent='📖 Stories';
+  $('gPrompt').textContent='Pick a story!';
+  narrate('Story time! Pick a story and I will read it to you.');
+  const stage=$('gStage'); stage.innerHTML='';
+  const opts=STORIES.map((s,i)=>({emoji:s.emoji,label:s.title,say:s.title,hex:'#ff9cc0',dark:'#c14a7c',i}));
+  stage.appendChild(optionCards(opts,(o)=>{storyIdx=o.i;pageIdx=0;openStory();}));
+  nextQ=openStoryMenu;
+}
+function openStory(){
+  show('scr-story');
+  renderPage();
+}
+function renderPage(){
+  const st=STORIES[storyIdx], pg=st.pages[pageIdx];
+  const w=$('storyWrap');
+  w.innerHTML=`
+   <h2 style="font-size:clamp(22px,5.5vw,30px);text-shadow:0 3px 0 rgba(21,55,102,.45);text-align:center">${st.emoji} ${st.title}</h2>
+   <div class="storypage"><div class="scene">${pg.s}</div><div class="stext" id="stext"></div></div>
+   <div class="dots">${st.pages.map((_,i)=>`<i class="${i===pageIdx?'on':''}"></i>`).join('')}</div>
+   <div style="display:flex;gap:12px;margin-top:6px">
+     ${pageIdx>0?'<button class="big-btn ghost" id="pgPrev">←</button>':''}
+     <button class="big-btn berry" id="pgNext">${pageIdx<st.pages.length-1?'Next →':'The end! ⭐'}</button>
+   </div>`;
+  // build one span per word so it can bounce as it is read
+  const tokens=pg.t.split(/\s+/).filter(Boolean);
+  const box=$('stext');
+  tokens.forEach((t,i)=>{
+    const sp=document.createElement('span'); sp.className='w'; sp.textContent=t;
+    box.appendChild(sp);
+    if(i<tokens.length-1) box.appendChild(document.createTextNode(' '));
+  });
+  narrateKaraoke(tokens,[...box.querySelectorAll('.w')]);
+  storyReplay=()=>narrateKaraoke(tokens,[...box.querySelectorAll('.w')]);
+  const nx=$('pgNext');
+  nx.addEventListener('pointerdown',()=>{
+    sfx.tap();
+    if(pageIdx<st.pages.length-1){ pageIdx++; renderPage(); }
+    else{
+      party.forEach(p=>{p.stars++;}); save();
+      cheer(st.emoji,'The end!','Everyone gets a story star! ⭐','Another story!',()=>openStoryMenu());
+    }
+  });
+  const pv=$('pgPrev'); if(pv) pv.addEventListener('pointerdown',()=>{pageIdx--;renderPage();});
+}
+
+/* ---------------- VOICE COMMANDS (optional) ---------------- */
+const SR = window.SpeechRecognition||window.webkitSpeechRecognition||null;
+let rec=null, listening=false;
+function startListen(){
+  if(!SR||listening) return;
+  rec=new SR(); rec.lang='en-US'; rec.interimResults=false; rec.maxAlternatives=3;
+  listening=true; $('btnMic').style.background='#ffd76b';
+  rec.onresult=e=>{
+    const heard=[...e.results[0]].map(r=>r.transcript.toLowerCase()).join(' ');
+    if(/home|map|back/.test(heard)){ openMap(); return; }
+    if(/again|repeat/.test(heard)){ say(lastLine); return; }
+    const hit=liveOptions.find(o=>o.label && heard.includes(o.label.toLowerCase().split(' ')[0]));
+    if(hit && hit.el){ hit.el.dispatchEvent(new Event('pointerdown')); }
+    else say('I heard '+heard+'. Try tapping, or say it again!');
+  };
+  rec.onend=()=>{ listening=false; $('btnMic').style.background=''; };
+  rec.onerror=()=>{ listening=false; $('btnMic').style.background=''; };
+  try{ rec.start(); say('I\u2019m listening!'); }catch(e){ listening=false; }
+}
+$('btnMic').addEventListener('pointerdown',startListen);
+// mic buttons also live on the game screen via long-press of the speaker? keep simple: map screen only.
+
+/* ---------------- GROWN-UPS ---------------- */
+function bindToggle(id,key){
+  const t=$(id);
+  t.classList.toggle('on',DB.settings[key]);
+  t.addEventListener('pointerdown',()=>{
+    DB.settings[key]=!DB.settings[key]; save();
+    t.classList.toggle('on',DB.settings[key]);
+    sfx.tap();
+    if(key==='voice'&&DB.settings.voice) say('Reading out loud is on!');
+    if(key==='mic') $('btnMic').style.display=(DB.settings.mic&&SR)?'grid':'none';
+  });
+}
+$('btnGrown1').addEventListener('pointerdown',()=>show('scr-grown'));
+$('btnGrown2').addEventListener('pointerdown',()=>show('scr-grown'));
+$('btnBack3').addEventListener('pointerdown',()=>{ party.length?openMap():(renderWho(),show('scr-who')); });
+$('btnReset').addEventListener('pointerdown',()=>{
+  if(confirm('Erase all players and progress on this device?')){
+    DB={players:[],settings:DB.settings}; save(); party=[]; renderWho(); show('scr-who');
+  }
+});
+
+/* ---------------- BOOT ---------------- */
+load();
+bindToggle('tgVoice','voice');
+bindToggle('tgMic','mic');
+bindToggle('tgFx','fx');
+if(!SR){ const row=$('tgMic').parentElement; row.style.opacity=.5; }
+</script>
+</body>
+</html>
